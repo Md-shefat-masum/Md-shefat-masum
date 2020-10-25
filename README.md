@@ -17,7 +17,7 @@ Welcome to my profile! I'm a Full-Stack web developer from Bangladesh. Thanks fo
 
 - Wakatime card
 
-[![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=Md-shefat-masum)](https://github.com/Md-shefat-masum/github-readme-stats)
+[![willianrod's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=willianrod)](https://github.com/Md-shefat-masum/github-readme-stats)
 
 ---
 ### Show some ❤️ by starring some of the repositories!
