@@ -5,7 +5,8 @@ Welcome to my profile! I'm a Full-Stack web developer from Bangladesh. Thanks fo
   <a href="https://github.com/Md-shefat-masum">
   <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Md-shefat-masum&show_icons=true&theme=dracula&include_all_commits=true&count_private=true"/>
   <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Md-shefat-masum&layout=compact&langs_count=7&theme=dracula"/>
-    [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Md-shefat-masum&layout=compact)](https://github.com/Md-shefat-masum)
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/wakatime/?username=Md-shefat-masum&layout=compact&langs_count=7&theme=dracula"/>
+
 </div>
 <div style="display: inline_block"><br>
   <img align="center" alt="Js" height="50" width="50" src="https://img.icons8.com/color/144/000000/javascript--v2.png">
