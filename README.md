@@ -2,10 +2,7 @@
 Welcome to my profile! I'm a Full-Stack web developer from Bangladesh. Thanks for visiting and I'd love to connect!
 
 <div>
-  <a href="https://github.com/Md-shefat-masum">
-<!--   <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Md-shefat-masum&show_icons=true&theme=dracula&include_all_commits=true&count_private=true"/>
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Md-shefat-masum&layout=compact&langs_count=7&theme=dracula"/> -->
-    <figure><embed src="https://wakatime.com/share/@8c212965-ff46-4a88-a097-7c8a1718035a/e499dd8c-9339-4209-9caa-90044529f1cf.svg"></embed></figure>
+  [![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Md-shefat-masum&theme=dracula)](https://github.com/ashutosh00710/github-readme-activity-graph)
 </div>
 <div style="display: inline_block"><br>
       <img align="center" alt="Docker" height="50" width="50" src="https://img.icons8.com/color/search/docker">
