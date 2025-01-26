@@ -1,9 +1,6 @@
 # Hi I'm Md.Shefat <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="25px">
 Welcome to my profile! I'm a Full-Stack web developer from Bangladesh. Thanks for visiting and I'd love to connect!
 
-<div>
-  [![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Md-shefat-masum&theme=dracula)](https://github.com/ashutosh00710/github-readme-activity-graph)
-</div>
 <div style="display: inline_block"><br>
       <img align="center" alt="Docker" height="50" width="50" src="https://img.icons8.com/color/search/docker">
     <img align="center" alt="Js" height="50" width="50" src="https://media.bitdegree.org/storage/media/images/2018/12/node-js-interview-questions-logo-2-266x300.png">
@@ -16,7 +13,6 @@ Welcome to my profile! I'm a Full-Stack web developer from Bangladesh. Thanks fo
     <img align="center" alt="Rest API" height="50" width="50" src="https://nextbigtechnology.com/wp-content/uploads/2018/10/restapi.jpg">
     <img align="center" alt="HTML" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
     <img align="center" alt="CSS" height="50" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
-    <img align="right" alt="code" width="200" height="200"  src="https://media.giphy.com/media/KNP5EQE5n2nczSFYpD/giphy.gif">
 
 </div>
   
