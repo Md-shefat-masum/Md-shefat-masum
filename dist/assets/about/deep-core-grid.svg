@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#02060B"/>
+  <g opacity="0.42">
+    <path d="M0 100H1600M0 200H1600M0 300H1600M0 400H1600M0 500H1600M0 600H1600M0 700H1600M0 800H1600" stroke="#00EAFF" stroke-opacity="0.13"/>
+    <path d="M100 0V900M200 0V900M300 0V900M400 0V900M500 0V900M600 0V900M700 0V900M800 0V900M900 0V900M1000 0V900M1100 0V900M1200 0V900M1300 0V900M1400 0V900M1500 0V900" stroke="#00EAFF" stroke-opacity="0.13"/>
+  </g>
+  <g opacity="0.35">
+    <circle cx="330" cy="450" r="230" stroke="#00EAFF" stroke-opacity="0.2"/>
+    <circle cx="330" cy="450" r="150" stroke="#14F1C4" stroke-opacity="0.18"/>
+    <circle cx="1240" cy="250" r="260" stroke="#00EAFF" stroke-opacity="0.16"/>
+    <circle cx="1240" cy="250" r="176" stroke="#8B5CF6" stroke-opacity="0.14"/>
+  </g>
+  <g opacity="0.55">
+    <path d="M116 708H344V640H512" stroke="#00EAFF" stroke-opacity="0.3"/>
+    <path d="M1008 142H1232V208H1482" stroke="#14F1C4" stroke-opacity="0.24"/>
+    <path d="M840 772H1044V690H1280" stroke="#00EAFF" stroke-opacity="0.22"/>
+  </g>
+  <g opacity="0.7">
+    <circle cx="116" cy="708" r="3" fill="#00EAFF"/>
+    <circle cx="512" cy="640" r="3" fill="#14F1C4"/>
+    <circle cx="1008" cy="142" r="3" fill="#00EAFF"/>
+    <circle cx="1482" cy="208" r="3" fill="#14F1C4"/>
+    <circle cx="1280" cy="690" r="3" fill="#00EAFF"/>
+  </g>
+</svg>

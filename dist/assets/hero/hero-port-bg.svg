@@ -1,0 +1,72 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="960" y1="0" x2="960" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#03111d"/>
+      <stop offset="0.48" stop-color="#041827"/>
+      <stop offset="1" stop-color="#02060b"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1280 390) rotate(90) scale(430 520)">
+      <stop stop-color="#00EAFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#00EAFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(440 520) rotate(90) scale(360 520)">
+      <stop stop-color="#14F1C4" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#14F1C4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <rect width="1920" height="1080" fill="url(#glow1)"/>
+  <rect width="1920" height="1080" fill="url(#glow2)"/>
+  <g opacity="0.18">
+    <path d="M0 194H1920M0 314H1920M0 434H1920M0 554H1920M0 674H1920M0 794H1920" stroke="#00EAFF" stroke-width="1"/>
+    <path d="M120 0V1080M240 0V1080M360 0V1080M480 0V1080M600 0V1080M720 0V1080M840 0V1080M960 0V1080M1080 0V1080M1200 0V1080M1320 0V1080M1440 0V1080M1560 0V1080M1680 0V1080M1800 0V1080" stroke="#00EAFF" stroke-width="1"/>
+  </g>
+  <!-- city skyline -->
+  <g opacity="0.58">
+    <rect x="1035" y="444" width="34" height="156" fill="#051321"/>
+    <rect x="1080" y="382" width="24" height="218" fill="#051321"/>
+    <rect x="1120" y="310" width="18" height="290" fill="#061827"/>
+    <rect x="1155" y="430" width="42" height="170" fill="#051321"/>
+    <rect x="1214" y="352" width="30" height="248" fill="#051321"/>
+    <rect x="1260" y="476" width="56" height="124" fill="#061827"/>
+    <rect x="1338" y="405" width="36" height="195" fill="#051321"/>
+    <path d="M1129 228L1138 310H1120L1129 228Z" fill="#00EAFF" opacity="0.45"/>
+  </g>
+  <!-- container ship silhouette -->
+  <g opacity="0.72">
+    <path d="M80 600H690L650 666H142L80 600Z" fill="#030b12"/>
+    <rect x="156" y="502" width="86" height="44" fill="#061827" stroke="#0ea5ff" opacity="0.6"/>
+    <rect x="248" y="502" width="86" height="44" fill="#061827" stroke="#00EAFF" opacity="0.45"/>
+    <rect x="340" y="502" width="86" height="44" fill="#061827" stroke="#0ea5ff" opacity="0.6"/>
+    <rect x="432" y="502" width="86" height="44" fill="#061827" stroke="#00EAFF" opacity="0.45"/>
+    <rect x="202" y="452" width="86" height="44" fill="#061827" stroke="#ff9f1c" opacity="0.45"/>
+    <rect x="294" y="452" width="86" height="44" fill="#061827" stroke="#0ea5ff" opacity="0.5"/>
+    <rect x="386" y="452" width="86" height="44" fill="#061827" stroke="#ff9f1c" opacity="0.36"/>
+  </g>
+  <!-- cranes -->
+  <g opacity="0.5" stroke="#ff9f1c" stroke-width="3">
+    <path d="M140 240V602"/>
+    <path d="M140 240L350 360"/>
+    <path d="M140 280L350 360"/>
+    <path d="M350 360V438"/>
+    <path d="M470 210V602"/>
+    <path d="M470 210L720 338"/>
+    <path d="M470 260L720 338"/>
+    <path d="M720 338V420"/>
+  </g>
+  <!-- buoys / lights -->
+  <g filter="url(#blur)">
+    <circle cx="130" cy="650" r="6" fill="#23FF9A"/>
+    <circle cx="1690" cy="498" r="7" fill="#FF384C"/>
+    <circle cx="1170" cy="274" r="5" fill="#00EAFF"/>
+  </g>
+  <!-- water reflection -->
+  <g opacity="0.42">
+    <path d="M0 704C170 670 290 743 453 706C657 660 770 731 958 698C1129 668 1277 733 1456 702C1634 672 1768 705 1920 684V1080H0V704Z" fill="#052033"/>
+    <path d="M0 735C170 701 290 774 453 737C657 691 770 762 958 729C1129 699 1277 764 1456 733C1634 703 1768 736 1920 715" stroke="#00EAFF" stroke-opacity="0.36"/>
+    <path d="M0 810C230 850 360 765 570 813C760 856 920 782 1110 818C1300 854 1515 790 1920 830" stroke="#14F1C4" stroke-opacity="0.2"/>
+  </g>
+</svg>
