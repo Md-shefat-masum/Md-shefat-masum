@@ -11,13 +11,6 @@ import {
 } from "lucide-react";
 import "./HeroPortSection.css";
 
-const heroStats = [
-  { icon: Anchor, value: "400+", label: "Students Mentored" },
-  { icon: ShipWheel, value: "80+", label: "Projects Completed" },
-  { icon: Compass, value: "4+", label: "Years Experience" },
-  { icon: Radio, value: "Team Lead", label: "Since 2022" },
-];
-
 const missionItems = [
   { label: "Status", value: "Online", tone: "green" },
   { label: "Availability", value: "Open for New Opportunities", tone: "cyan" },
