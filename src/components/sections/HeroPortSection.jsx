@@ -63,7 +63,7 @@ export default function HeroPortSection() {
             <a className="glow-btn" href="#projects">
               Explore My Work <ArrowRight size={18} />
             </a>
-            <a className="ghost-btn" href="/assets/hero/shefat-cv.pdf" download>
+            <a className="ghost-btn" href="./assets/hero/shefat-cv.pdf" download>
               Download CV <Download size={18} />
             </a>
           </div>
@@ -96,19 +96,19 @@ export default function HeroPortSection() {
               <div className="hero-holo-side-glow hero-holo-side-glow--right" />
             </div>
 
-            <img className="hero-hud-frame" src="/assets/hero/hud-frame.svg" alt="" aria-hidden="true" />
+            <img className="hero-hud-frame" src="./assets/hero/hud-frame.svg" alt="" aria-hidden="true" />
 
             <div className="hero-holo-subject-wrap">
               <img
                 className="hero-profile-image hero-profile-image--back"
-                src="/assets/hero/shefat-hero-fit.png"
+                src="./assets/hero/shefat-hero-fit.png"
                 alt=""
                 aria-hidden="true"
               />
 
               <img
                 className="hero-profile-image hero-profile-image--main"
-                src="/assets/hero/shefat-hero-fit.png"
+                src="./assets/hero/shefat-hero-fit.png"
                 alt="Shefat Masum portrait"
               />
 

@@ -104,9 +104,9 @@ export default function ContactDeepStationSection() {
       <div className="depth-marker">-3000m · Deep Station</div>
 
       <div className="contact-station-bg" aria-hidden="true">
-        <img src="/assets/contact/contact-depth-grid.svg" alt="" className="contact-station-bg__grid" />
-        <img src="/assets/contact/deep-station-lines.svg" alt="" className="contact-station-bg__lines" />
-        <img src="/assets/contact/station-beacon.svg" alt="" className="contact-station-bg__beacon" />
+        <img src="./assets/contact/contact-depth-grid.svg" alt="" className="contact-station-bg__grid" />
+        <img src="./assets/contact/deep-station-lines.svg" alt="" className="contact-station-bg__lines" />
+        <img src="./assets/contact/station-beacon.svg" alt="" className="contact-station-bg__beacon" />
         <span className="contact-station-bg__glow contact-station-bg__glow--one" />
         <span className="contact-station-bg__glow contact-station-bg__glow--two" />
         <span className="contact-station-bg__bubble contact-station-bg__bubble--one" />

@@ -17,8 +17,8 @@ export default function TechStackSection() {
       <div className="depth-marker">{depth}</div>
 
       <div className="tech-stack-bg" aria-hidden="true">
-        <img src="/assets/skills/ship-systems-grid.svg" alt="" className="tech-grid" />
-        <img src="/assets/skills/system-routes.svg" alt="" className="tech-routes" />
+        <img src="./assets/skills/ship-systems-grid.svg" alt="" className="tech-grid" />
+        <img src="./assets/skills/system-routes.svg" alt="" className="tech-routes" />
         <span className="tech-glow tech-glow--one" />
         <span className="tech-glow tech-glow--two" />
       </div>

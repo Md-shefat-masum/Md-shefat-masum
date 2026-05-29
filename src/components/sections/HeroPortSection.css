@@ -21,7 +21,7 @@
 }
 
 .hero-bg-image {
-    background: linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)), url("/assets/hero/hero-port-bg.svg") center/cover no-repeat;
+    background: linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)), url("./assets/hero/hero-port-bg.svg") center/cover no-repeat;
     transform: scale(1.03);
     filter: saturate(1.08) contrast(1.04);
 }
@@ -428,7 +428,7 @@
     top: auto;
     height: 280px;
     bottom: 0;
-    background: url("/assets/hero/water-surface.svg") center bottom/cover no-repeat;
+    background: url("./assets/hero/water-surface.svg") center bottom/cover no-repeat;
     z-index: 1;
     opacity: 0.92;
     animation: floatX 8s ease-in-out infinite;
@@ -472,7 +472,7 @@
 .hero-bg-image {
     background:
         linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)),
-        url("/assets/hero/hero-port-bg.svg") center / cover no-repeat;
+        url("./assets/hero/hero-port-bg.svg") center / cover no-repeat;
     transform: scale(1.03);
     filter: saturate(1.08) contrast(1.04);
 }
@@ -1026,7 +1026,7 @@
     top: auto;
     height: 280px;
     bottom: 0;
-    background: url("/assets/hero/water-surface.svg") center bottom / cover no-repeat;
+    background: url("./assets/hero/water-surface.svg") center bottom / cover no-repeat;
     z-index: 1;
     opacity: 0.92;
     animation: floatX 8s ease-in-out infinite;

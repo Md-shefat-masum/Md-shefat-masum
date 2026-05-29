@@ -13,8 +13,8 @@
   z-index: 0;
   pointer-events: none;
   background-image:
-    url("/assets/stats/shallow-depth-grid.svg"),
-    url("/assets/stats/underwater-particles.svg");
+    url("./assets/stats/shallow-depth-grid.svg"),
+    url("./assets/stats/underwater-particles.svg");
   background-size: cover, cover;
   background-position: center, center;
   opacity: 0.55;
@@ -105,7 +105,7 @@
   width: 96px;
   height: 28px;
   opacity: 0.22;
-  background: url("/assets/stats/fish-silhouette.svg") center / contain no-repeat;
+  background: url("./assets/stats/fish-silhouette.svg") center / contain no-repeat;
   filter: drop-shadow(0 0 16px rgba(0, 234, 255, 0.22));
   animation: atGlanceSwim 24s linear infinite;
 }
