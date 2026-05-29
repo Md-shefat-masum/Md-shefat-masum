@@ -1,0 +1,20 @@
+<svg width="300" height="130" viewBox="0 0 300 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.82">
+    <path d="M36 116H98V126H36V116Z" fill="#00EAFF" fill-opacity="0.24"/>
+    <path d="M64 96H90V116H64V96Z" fill="#00EAFF" fill-opacity="0.32"/>
+    <path d="M96 84H116V116H96V84Z" fill="#00EAFF" fill-opacity="0.24"/>
+    <path d="M118 76H136V116H118V76Z" fill="#00EAFF" fill-opacity="0.18"/>
+    <path d="M138 90H156V116H138V90Z" fill="#00EAFF" fill-opacity="0.24"/>
+    <path d="M160 102H180V116H160V102Z" fill="#00EAFF" fill-opacity="0.18"/>
+  </g>
+  <g opacity="0.8">
+    <path d="M168 120C174 108 184 102 195 102C209 102 220 110 228 122H168V120Z" fill="#14F1C4" fill-opacity="0.18"/>
+    <path d="M196 68C187 72 182 82 182 90C182 100 187 108 198 110C206 102 210 94 210 85C210 76 206 70 196 68Z" fill="#14F1C4" fill-opacity="0.34"/>
+    <path d="M194 110V122" stroke="#14F1C4" stroke-opacity="0.45" stroke-width="3"/>
+  </g>
+  <g opacity="0.5">
+    <rect x="224" y="64" width="52" height="26" rx="5" stroke="#00EAFF" stroke-opacity="0.24"/>
+    <rect x="214" y="96" width="62" height="26" rx="5" stroke="#00EAFF" stroke-opacity="0.24"/>
+    <rect x="236" y="18" width="56" height="26" rx="5" stroke="#00EAFF" stroke-opacity="0.24"/>
+  </g>
+</svg>

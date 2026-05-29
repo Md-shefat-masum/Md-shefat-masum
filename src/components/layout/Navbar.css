@@ -1,0 +1,357 @@
+.ocean-navbar {
+    position: fixed;
+    top: 18px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 22px;
+    pointer-events: none;
+  }
+  
+  .ocean-navbar__shell {
+    width: min(1240px, 100%);
+    height: 70px;
+    margin: 0 auto;
+    padding: 0 10px 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid rgba(0, 234, 255, 0.18);
+    border-radius: 999px;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+      rgba(2, 13, 23, 0.62);
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    pointer-events: auto;
+    transition:
+      height var(--transition-normal),
+      background var(--transition-normal),
+      border-color var(--transition-normal),
+      box-shadow var(--transition-normal);
+  }
+  
+  .ocean-navbar--scrolled .ocean-navbar__shell {
+    height: 62px;
+    border-color: rgba(0, 234, 255, 0.34);
+    background:
+      linear-gradient(135deg, rgba(0, 234, 255, 0.08), rgba(255, 255, 255, 0.025)),
+      rgba(2, 11, 18, 0.84);
+    box-shadow:
+      0 18px 70px rgba(0, 0, 0, 0.34),
+      0 0 34px rgba(0, 234, 255, 0.13);
+  }
+  
+  .ocean-navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: max-content;
+  }
+  
+  .ocean-navbar__logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    display: inline-grid;
+    place-items: center;
+    position: relative;
+    color: var(--cyan);
+    border: 1px solid rgba(0, 234, 255, 0.46);
+    background:
+      radial-gradient(circle at 25% 20%, rgba(0, 234, 255, 0.28), transparent 36%),
+      linear-gradient(145deg, rgba(0, 234, 255, 0.12), rgba(20, 241, 196, 0.05));
+    box-shadow: var(--glow-cyan);
+    overflow: hidden;
+  }
+  
+  .ocean-navbar__logo span {
+    position: absolute;
+    bottom: 6px;
+    right: 7px;
+    font-family: var(--font-hud);
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+  
+  .ocean-navbar__brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .ocean-navbar__brand-text strong {
+    font-family: var(--font-heading);
+    font-size: 19px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  
+  .ocean-navbar__brand-text small {
+    font-family: var(--font-hud);
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  
+  .ocean-navbar__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+  }
+  
+  .ocean-navbar__links a {
+    position: relative;
+    padding: 10px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-soft);
+    transition:
+      color var(--transition-fast),
+      background var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+  
+  .ocean-navbar__links a:hover,
+  .ocean-navbar__links a.is-active {
+    color: #001017;
+    background: linear-gradient(135deg, var(--cyan), var(--teal));
+    box-shadow: 0 0 24px rgba(0, 234, 255, 0.24);
+  }
+  
+  .ocean-navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .ocean-navbar__signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(35, 255, 154, 0.22);
+    color: var(--green-signal);
+    background: rgba(35, 255, 154, 0.07);
+    font-family: var(--font-hud);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  
+  .ocean-navbar__signal svg {
+    animation: statusBlink 1.4s ease-in-out infinite;
+  }
+  
+  .ocean-navbar__socials {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .ocean-navbar__socials a {
+    width: 38px;
+    font-family: var(--font-hud);
+    height: 38px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--text-soft);
+    border: 1px solid rgba(255, 255, 255, 0.095);
+    background: rgba(255, 255, 255, 0.04);
+    transition:
+      transform var(--transition-normal),
+      color var(--transition-normal),
+      border-color var(--transition-normal),
+      background var(--transition-normal);
+  }
+  
+  .ocean-navbar__socials a:hover {
+    transform: translateY(-2px);
+    color: var(--cyan);
+    border-color: rgba(0, 234, 255, 0.42);
+    background: rgba(0, 234, 255, 0.08);
+  }
+  
+  .ocean-navbar__cta {
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border-radius: 999px;
+    color: #001017;
+    font-weight: 800;
+    font-size: 13px;
+    background: linear-gradient(135deg, var(--cyan), var(--teal));
+    box-shadow: 0 0 22px rgba(0, 234, 255, 0.3);
+    transition:
+      transform var(--transition-normal),
+      box-shadow var(--transition-normal);
+  }
+  
+  .ocean-navbar__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 34px rgba(0, 234, 255, 0.48);
+  }
+  
+  .ocean-navbar__menu-btn {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(0, 234, 255, 0.2);
+  }
+  
+  /* Mobile menu */
+  
+  .ocean-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: rgba(0, 8, 14, 0.4);
+    backdrop-filter: blur(0);
+    transition:
+      opacity var(--transition-normal),
+      backdrop-filter var(--transition-normal);
+  }
+  
+  .ocean-mobile-menu.is-open {
+    z-index: 99;
+    opacity: 1;
+    pointer-events: auto;
+    backdrop-filter: blur(8px);
+  }
+  
+  .ocean-mobile-menu__panel {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 98px;
+    padding: 22px;
+    border-radius: 28px;
+    border: 1px solid rgba(0, 234, 255, 0.28);
+    background:
+      radial-gradient(circle at top left, rgba(0, 234, 255, 0.14), transparent 36%),
+      rgba(2, 13, 23, 0.88);
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5);
+    transform: translateY(-14px) scale(0.98);
+    transition: transform var(--transition-normal);
+  }
+  
+  .ocean-mobile-menu.is-open .ocean-mobile-menu__panel {
+    transform: translateY(0) scale(1);
+  }
+  
+  .ocean-mobile-menu__top {
+    margin-bottom: 20px;
+  }
+  
+  .ocean-mobile-menu__links {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .ocean-mobile-menu__links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 54px;
+    padding: 0 16px;
+    border-radius: 18px;
+    color: var(--text-main);
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+  }
+  
+  .ocean-mobile-menu__links a span {
+    font-family: var(--font-hud);
+    color: var(--cyan);
+    font-size: 12px;
+  }
+  
+  .ocean-mobile-menu__links a.is-active {
+    border-color: rgba(0, 234, 255, 0.45);
+    background: rgba(0, 234, 255, 0.1);
+    box-shadow: var(--glow-cyan);
+  }
+  
+  .ocean-mobile-menu__cta {
+    width: 100%;
+    margin-top: 18px;
+  }
+  
+  /* Responsive */
+  
+  @media (max-width: 1100px) {
+    .ocean-navbar__signal,
+    .ocean-navbar__socials {
+      display: none;
+    }
+  
+    .ocean-navbar__links a {
+      padding-inline: 10px;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .ocean-navbar {
+      top: 12px;
+      padding: 0 14px;
+    }
+  
+    .ocean-navbar__shell {
+      height: 64px;
+      padding: 0 8px 0 10px;
+    }
+  
+    .ocean-navbar__links,
+    .ocean-navbar__cta {
+      display: none;
+    }
+  
+    .ocean-navbar__menu-btn {
+      display: inline-flex;
+    }
+  
+    .ocean-navbar__brand-text strong {
+      font-size: 17px;
+    }
+  
+    .ocean-navbar__brand-text small {
+      font-size: 9px;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .ocean-navbar__brand-text small {
+      display: none;
+    }
+  
+    .ocean-navbar__logo {
+      width: 42px;
+      height: 42px;
+    }
+  }
