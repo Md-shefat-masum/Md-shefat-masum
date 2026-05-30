@@ -265,8 +265,8 @@
     object-fit: contain;
     object-position: bottom center;
     position: absolute;
-    bottom: 15px;
-    left: 51%;
+    bottom: 30px;
+    left: 49%;
     transform: translateX(-50%);
 }
 
@@ -1168,6 +1168,77 @@
 
 .scroll-to-dive-container{
     margin-top: 50px;
+}
+
+.hud-profile {
+    --hud-rgb: 0, 234, 255;
+    width: min(520px, 100%);
+    isolation: isolate;
+}
+
+.hud-profile__image {
+    opacity: 0.88;
+    filter:
+        drop-shadow(0 0 3px rgba(var(--hud-rgb), 0.85))
+        drop-shadow(0 0 10px rgba(var(--hud-rgb), 0.55))
+        drop-shadow(0 0 24px rgba(var(--hud-rgb), 0.32))
+        drop-shadow(0 0 48px rgba(var(--hud-rgb), 0.16));
+    animation: hud-profile-glow 6.5s ease-in-out infinite;
+
+    transition:
+        filter 450ms ease,
+        opacity 450ms ease,
+        transform 450ms ease;
+}
+
+.hud-profile:hover .hud-profile__image {
+    opacity: 1;
+    filter:
+        drop-shadow(0 0 4px rgba(var(--hud-rgb), 1))
+        drop-shadow(0 0 14px rgba(var(--hud-rgb), 0.75))
+        drop-shadow(0 0 34px rgba(var(--hud-rgb), 0.48))
+        drop-shadow(0 0 72px rgba(var(--hud-rgb), 0.24));
+    animation: hud-profile-glow-hover 4.8s ease-in-out infinite;
+}
+
+@keyframes hud-profile-glow {
+    0%,
+    100% {
+        opacity: 0.86;
+        filter:
+            drop-shadow(0 0 3px rgba(var(--hud-rgb), 0.78))
+            drop-shadow(0 0 10px rgba(var(--hud-rgb), 0.48))
+            drop-shadow(0 0 24px rgba(var(--hud-rgb), 0.28))
+            drop-shadow(0 0 48px rgba(var(--hud-rgb), 0.14));
+    }
+
+    50% {
+        opacity: 0.94;
+        filter:
+            drop-shadow(0 0 4px rgba(var(--hud-rgb), 0.96))
+            drop-shadow(0 0 13px rgba(var(--hud-rgb), 0.62))
+            drop-shadow(0 0 31px rgba(var(--hud-rgb), 0.38))
+            drop-shadow(0 0 62px rgba(var(--hud-rgb), 0.2));
+    }
+}
+
+@keyframes hud-profile-glow-hover {
+    0%,
+    100% {
+        filter:
+            drop-shadow(0 0 4px rgba(var(--hud-rgb), 0.95))
+            drop-shadow(0 0 14px rgba(var(--hud-rgb), 0.68))
+            drop-shadow(0 0 34px rgba(var(--hud-rgb), 0.42))
+            drop-shadow(0 0 72px rgba(var(--hud-rgb), 0.22));
+    }
+
+    50% {
+        filter:
+            drop-shadow(0 0 5px rgba(var(--hud-rgb), 1))
+            drop-shadow(0 0 18px rgba(var(--hud-rgb), 0.84))
+            drop-shadow(0 0 44px rgba(var(--hud-rgb), 0.56))
+            drop-shadow(0 0 88px rgba(var(--hud-rgb), 0.3));
+    }
 }
 
 
