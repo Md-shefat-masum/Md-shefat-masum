@@ -99,16 +99,7 @@
   animation-duration: 11s;
 }
 
-.at-glance-fish {
-  position: absolute;
-  z-index: 1;
-  width: 96px;
-  height: 28px;
-  opacity: 0.22;
-  background: url("./assets/stats/fish-silhouette.svg") center / contain no-repeat;
-  filter: drop-shadow(0 0 16px rgba(0, 234, 255, 0.22));
-  animation: atGlanceSwim 24s linear infinite;
-}
+
 
 .at-glance-fish--one {
   left: -120px;

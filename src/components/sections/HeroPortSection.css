@@ -20,12 +20,6 @@
     overflow: hidden;
 }
 
-.hero-bg-image {
-    background: linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)), url("./assets/hero/hero-port-bg.svg") center/cover no-repeat;
-    transform: scale(1.03);
-    filter: saturate(1.08) contrast(1.04);
-}
-
 .hero-grid {
     opacity: 0.22;
     background-image: linear-gradient(rgba(0, 234, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 234, 255, 0.08) 1px, transparent 1px);
@@ -469,13 +463,7 @@
     overflow: hidden;
 }
 
-.hero-bg-image {
-    background:
-        linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)),
-        url("./assets/hero/hero-port-bg.svg") center / cover no-repeat;
-    transform: scale(1.03);
-    filter: saturate(1.08) contrast(1.04);
-}
+
 
 .hero-grid {
     opacity: 0.22;

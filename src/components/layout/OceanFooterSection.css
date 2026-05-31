@@ -74,18 +74,6 @@
   transform: rotate(-12deg);
 }
 
-.ocean-footer__floor {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  bottom: -4px;
-  height: 220px;
-  opacity: 0.5;
-  background:
-    url("./assets/footer/footer-wave-floor.svg") center bottom / cover no-repeat,
-    linear-gradient(180deg, transparent, rgba(0, 234, 255, 0.07));
-  mask-image: linear-gradient(to top, black, transparent);
-}
 
 .ocean-footer__inner {
   position: relative;
