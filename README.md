@@ -45,7 +45,7 @@
   "name": "Md. Shefat Masum",
   "role": "Full-Stack Software Engineer",
   "location": "Bangladesh",
-  "experience": "5+ years",
+  "experience": "9+ years",
   "focus": [
     "Scalable Web Applications",
     "Clean Architecture",
