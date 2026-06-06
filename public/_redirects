@@ -1,0 +1,2 @@
+# Netlify SPA fallback. Existing static files are served before this rewrite.
+/*  /index.html  200

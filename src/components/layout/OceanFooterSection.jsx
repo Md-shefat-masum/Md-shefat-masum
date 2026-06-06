@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   footerContacts,
   footerIcons,
@@ -10,6 +11,16 @@ import {
 import "./OceanFooterSection.css";
 
 const { ArrowUpRight, Anchor, Radio } = footerIcons;
+
+const isInternalRoute = (href) => href.startsWith("/");
+
+function SmartLink({ href, children, ...props }) {
+  if (isInternalRoute(href)) {
+    return <Link to={href} {...props}>{children}</Link>;
+  }
+
+  return <a href={href} {...props}>{children}</a>;
+}
 
 export default function OceanFooterSection() {
   const year = new Date().getFullYear();
@@ -31,10 +42,10 @@ export default function OceanFooterSection() {
             {footerIdentity.depth}
           </span>
 
-          <a className="ocean-footer__surface" href="#home">
+          <Link className="ocean-footer__surface" to="/">
             Back to Surface
             <ArrowUpRight size={16} />
-          </a>
+          </Link>
         </div>
 
         <div className="ocean-footer__cta hud-card">
@@ -53,9 +64,9 @@ export default function OceanFooterSection() {
                 Send Message
                 <ArrowUpRight size={17} />
               </a>
-              <a className="ghost-btn" href="#projects">
+              <Link className="ghost-btn" to="/projects">
                 View Projects
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -98,10 +109,10 @@ export default function OceanFooterSection() {
             <h3>Navigation</h3>
             <nav aria-label="Footer navigation">
               {footerQuickLinks.map((link, index) => (
-                <a href={link.href} key={link.href}>
+                <Link to={link.href} key={link.href}>
                   <span>0{index + 1}</span>
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </section>
@@ -112,10 +123,10 @@ export default function OceanFooterSection() {
               {footerServices.map((service) => {
                 const Icon = service.icon;
                 return (
-                  <a href="#contact" key={service.label}>
+                  <Link to="/contact" key={service.label}>
                     <Icon size={17} />
                     {service.label}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -128,13 +139,13 @@ export default function OceanFooterSection() {
               {footerContacts.map((contact) => {
                 const Icon = contact.icon;
                 return (
-                  <a href={contact.href} key={contact.label} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noreferrer" : undefined}>
+                  <SmartLink href={contact.href} key={contact.label} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noreferrer" : undefined}>
                     <span>
                       <Icon size={17} />
                     </span>
                     <strong>{contact.label}</strong>
                     <small>{contact.value}</small>
-                  </a>
+                  </SmartLink>
                 );
               })}
             </div>
@@ -155,7 +166,7 @@ export default function OceanFooterSection() {
         <div className="ocean-footer__bottom">
           <p>© {year} {footerIdentity.name}. All rights reserved.</p>
           <span>Designed for deep portfolio exploration.</span>
-          <a href="#home">Surface ↑</a>
+          <Link to="/">Surface ↑</Link>
         </div>
       </div>
     </footer>

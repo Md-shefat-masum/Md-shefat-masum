@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && node scripts/create-spa-fallback.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "lint": "eslint ."
   },
@@ -15,6 +15,7 @@
     "lucide-react": "^1.17.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "^7.17.0",
     "vite": "latest"
   },
   "devDependencies": {

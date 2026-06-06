@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowRight,
@@ -98,8 +99,8 @@ export default function JourneySection() {
       <div className="depth-marker">-1000m · Journey Route</div>
 
       <div className="journey-bg" aria-hidden="true">
-        <img src="./assets/journey/journey-route-grid.svg" alt="" className="journey-bg__grid" />
-        <img src="./assets/journey/journey-current-lines.svg" alt="" className="journey-bg__lines" />
+        <img src="/assets/journey/journey-route-grid.svg" alt="" className="journey-bg__grid" />
+        <img src="/assets/journey/journey-current-lines.svg" alt="" className="journey-bg__lines" />
         <span className="journey-bg__glow journey-bg__glow--one" />
         <span className="journey-bg__glow journey-bg__glow--two" />
         <span className="journey-bg__bubble journey-bg__bubble--one" />
@@ -244,9 +245,9 @@ export default function JourneySection() {
             </span>
             <strong>-2000m · Deep Core Identity Station</strong>
           </div>
-          <a href="#about" className="ghost-btn">
+          <Link to="/about" className="ghost-btn">
             Continue Dive <ArrowRight size={17} />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,0 +1,5 @@
+# Add this inside the server { ... } block when deploying with Nginx.
+# Existing files (including /posts/*) are served directly; React app routes fall back to index.html.
+location / {
+    try_files $uri $uri/ /index.html;
+}

@@ -1,67 +1,42 @@
-import { useEffect, useState } from "react";
-import { Anchor, Menu, X, Radio, Mail } from "lucide-react";
-import "./Navbar.css";
+import { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { Anchor, Menu, X, Radio, Mail } from 'lucide-react'
+import './Navbar.css'
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Stats", href: "#stats" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Journey", href: "#journey" },
-  { label: "Contact", href: "#contact" },
-];
+  { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Contact', to: '/contact' },
+]
+
+const getNavClassName = ({ isActive }) => (isActive ? 'is-active' : '')
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeHash, setActiveHash] = useState("#home");
+  const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
+      setIsScrolled(window.scrollY > 24)
+    }
 
-      const current = navLinks
-        .map((link) => {
-          const section = document.querySelector(link.href);
-          if (!section) return null;
-
-          const rect = section.getBoundingClientRect();
-
-          return {
-            href: link.href,
-            distance: Math.abs(rect.top - 120),
-            visible: rect.top <= 180 && rect.bottom >= 180,
-          };
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.distance - b.distance);
-
-      const visibleSection = current.find((item) => item.visible);
-
-      if (visibleSection) {
-        setActiveHash(visibleSection.href);
-      }
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const closeMenu = () => {
-    setIsOpen(false);
-  };
+    setIsOpen(false)
+  }
 
   return (
-    <header className={`ocean-navbar ${isScrolled ? "ocean-navbar--scrolled" : ""}`}>
+    <header className={`ocean-navbar ${isScrolled ? 'ocean-navbar--scrolled' : ''}`}>
       <div className="ocean-navbar__shell">
-        <a className="ocean-navbar__brand" href="#home" onClick={closeMenu}>
+        <Link className="ocean-navbar__brand" to="/" onClick={closeMenu}>
           <span className="ocean-navbar__logo">
             <Anchor size={18} />
             <span>SM</span>
@@ -71,17 +46,13 @@ export default function Navbar() {
             <strong>Shefat OceanOS</strong>
             <small>Build · Solve · Dive</small>
           </span>
-        </a>
+        </Link>
 
         <nav className="ocean-navbar__links" aria-label="Main navigation">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              className={activeHash === link.href ? "is-active" : ""}
-              href={link.href}
-            >
+            <NavLink key={link.to} className={getNavClassName} to={link.to} end={link.to === '/'}>
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -103,15 +74,15 @@ export default function Navbar() {
             </a>
           </div>
 
-          <a className="ocean-navbar__cta" href="#contact">
+          <Link className="ocean-navbar__cta" to="/contact" onClick={closeMenu}>
             Let’s Connect
-          </a>
+          </Link>
 
           <button
             className="ocean-navbar__menu-btn"
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
           >
             {isOpen ? <X size={22} /> : <Menu size={22} />}
@@ -119,7 +90,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`ocean-mobile-menu ${isOpen ? "is-open" : ""}`}>
+      <div className={`ocean-mobile-menu ${isOpen ? 'is-open' : ''}`}>
         <div className="ocean-mobile-menu__panel">
           <div className="ocean-mobile-menu__top">
             <span className="hud-label">
@@ -130,23 +101,24 @@ export default function Navbar() {
 
           <nav className="ocean-mobile-menu__links" aria-label="Mobile navigation">
             {navLinks.map((link, index) => (
-              <a
-                key={link.href}
-                className={activeHash === link.href ? "is-active" : ""}
-                href={link.href}
+              <NavLink
+                key={link.to}
+                className={getNavClassName}
+                to={link.to}
+                end={link.to === '/'}
                 onClick={closeMenu}
               >
                 <span>0{index + 1}</span>
                 {link.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
 
-          <a className="glow-btn ocean-mobile-menu__cta" href="#contact" onClick={closeMenu}>
+          <Link className="glow-btn ocean-mobile-menu__cta" to="/contact" onClick={closeMenu}>
             Start a Mission
-          </a>
+          </Link>
         </div>
       </div>
     </header>
-  );
+  )
 }

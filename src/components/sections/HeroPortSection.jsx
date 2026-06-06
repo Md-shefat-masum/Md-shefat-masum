@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Anchor,
   ArrowDownToLine,
@@ -21,7 +22,7 @@ const missionItems = [
 
 export default function HeroPortSection() {
   return (
-    <section className="ocean-section hero-port-section" aria-labelledby="hero-title">
+    <section id="home" className="ocean-section hero-port-section" aria-labelledby="hero-title">
       <div className="depth-marker hero-depth">0m · Surface Port</div>
 
       <div className="hero-port-bg" aria-hidden="true">
@@ -60,10 +61,10 @@ export default function HeroPortSection() {
           </p>
 
           <div className="hero-actions">
-            <a className="glow-btn" href="#projects">
+            <Link className="glow-btn" to="/projects">
               Explore My Work <ArrowRight size={18} />
-            </a>
-            <a className="ghost-btn" href="./assets/hero/shefat-cv.pdf" download>
+            </Link>
+            <a className="ghost-btn" href="/assets/hero/shefat-cv.pdf" download>
               Download CV <Download size={18} />
             </a>
           </div>
@@ -96,33 +97,33 @@ export default function HeroPortSection() {
               <div className="hero-holo-side-glow hero-holo-side-glow--right" />
             </div>
 
-            <img className="hero-hud-frame" src="./assets/hero/hud-frame.svg" alt="" aria-hidden="true" />
+            <img className="hero-hud-frame" src="/assets/hero/hud-frame.svg" alt="" aria-hidden="true" />
 
             <div className="hero-holo-subject-wrap">
               <div className="hud-profile">
                 {/* <img
                   className="hero-profile-image hero-profile-image--back "
-                  src="./assets/hero/shefat_hero_for_hud.png"
+                  src="/assets/hero/shefat_hero_for_hud.png"
                   alt=""
                   aria-hidden="true"
                 /> */}
 
                 <img
                   className="hero-profile-image hero-profile-image--main hud-profile__image"
-                  src="./assets/hero/shefat_hero_for_hud.png"
+                  src="/assets/hero/shefat_hero_for_hud.png"
                   alt="Shefat Masum portrait"
                 />
               </div>
               {/* <img
                 className="hero-profile-image hero-profile-image--back"
-                src="./assets/hero/shefat-hero-fit.png"
+                src="/assets/hero/shefat-hero-fit.png"
                 alt=""
                 aria-hidden="true"
               />
 
               <img
                 className="hero-profile-image hero-profile-image--main"
-                src="./assets/hero/shefat-hero-fit.png"
+                src="/assets/hero/shefat-hero-fit.png"
                 alt="Shefat Masum portrait"
               /> */}
 
@@ -168,10 +169,10 @@ export default function HeroPortSection() {
           ))}
         </div> */}
         <div className="scroll-to-dive-container">
-          <a className="scroll-to-dive" href="#stats" aria-label="Scroll to next section">
+          <Link className="scroll-to-dive" to="/#stats" aria-label="Scroll to next section">
             <span>Scroll to dive</span>
             <ArrowDownToLine size={18} />
-          </a>
+          </Link>
         </div>
       </div>
 

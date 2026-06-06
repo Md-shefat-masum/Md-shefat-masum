@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ArrowRight, Gauge, Signal, Sparkles } from "lucide-react";
 import DepthMarker from "../common/DepthMarker.jsx";
 import { glanceBadges, glanceStats, missionSignals } from "../../data/atAGlanceContent.js";
@@ -5,7 +6,7 @@ import "./AtAGlanceSection.css";
 
 export default function AtAGlanceSection() {
   return (
-    <div className="ocean-section at-glance-section">
+    <div id="stats" className="ocean-section at-glance-section">
       <DepthMarker depth="-50m" label="Key Highlights" />
 
       <div className="at-glance-bg" aria-hidden="true">
@@ -59,9 +60,9 @@ export default function AtAGlanceSection() {
                 ))}
               </div>
 
-              <a className="at-glance-console__link" href="#skills">
+              <Link className="at-glance-console__link" to="/#skills">
                 Continue to Ship Systems <ArrowRight size={16} />
-              </a>
+              </Link>
             </div>
           </aside>
 

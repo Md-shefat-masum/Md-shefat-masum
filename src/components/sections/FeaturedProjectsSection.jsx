@@ -1,15 +1,16 @@
+import { Link } from 'react-router-dom';
 import { ArrowUpRight, Anchor, Radar, Route, ShipWheel, ExternalLink } from 'lucide-react';
 import { featuredProjects, projectSignals } from '../../data/projectsContent';
 import './FeaturedProjectsSection.css';
 
 export default function FeaturedProjectsSection() {
   return (
-    <section className="ocean-section projects-destinations" aria-labelledby="projects-title">
+    <section id="projects" className="ocean-section projects-destinations" aria-labelledby="projects-title">
       <div className="depth-marker">-500m · Destinations</div>
 
       <div className="projects-destinations__bg" aria-hidden="true">
-        <img className="projects-destinations__grid" src="./assets/projects/project-depth-grid.svg" alt="" />
-        <img className="projects-destinations__route" src="./assets/projects/project-route-map.svg" alt="" />
+        <img className="projects-destinations__grid" src="/assets/projects/project-depth-grid.svg" alt="" />
+        <img className="projects-destinations__route" src="/assets/projects/project-route-map.svg" alt="" />
         <span className="projects-destinations__glow projects-destinations__glow--one" />
         <span className="projects-destinations__glow projects-destinations__glow--two" />
         <span className="projects-destinations__submarine" />
@@ -89,9 +90,9 @@ export default function FeaturedProjectsSection() {
             </div>
           </div>
 
-          <a href="#journey" className="ghost-btn projects-destinations__next">
+          <Link to="/#journey" className="ghost-btn projects-destinations__next">
             Continue to Journey <Route size={17} />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

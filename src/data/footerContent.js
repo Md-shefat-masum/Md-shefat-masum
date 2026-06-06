@@ -23,12 +23,12 @@ export const footerIdentity = {
 };
 
 export const footerQuickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Stats", href: "#stats" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Journey", href: "#journey" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Stats", href: "/#stats" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Projects", href: "/projects" },
+  { label: "Journey", href: "/#journey" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const footerServices = [
@@ -54,7 +54,7 @@ export const footerContacts = [
   {
     label: "Base",
     value: "Bangladesh · GMT+6",
-    href: "#contact",
+    href: "/contact",
     icon: MapPin,
   },
 ];
