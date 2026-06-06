@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Merge, Push, Cherry-pick ও Conflict Fix — VPS সহ পূর্ণাঙ্গ বাংলা Tutorial</title>
+  <meta name="description" content="Git setup, pull, merge, cherry-pick, selected commit push, reset, reflog ও VPS merge conflict fix শিখুন practical example এবং copyable command সহ।">
+  <meta name="keywords" content="Git merge conflict fix Bangla, Git cherry-pick Bangla, selected commit push Git, Git reset hard origin main, Git VPS conflict fix">
+  <meta name="author" content="SOFTKROY">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="canonical" href="https://softkroy.com/git-merge-push-recovery-bangla-tutorial/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Git Merge, Push, Cherry-pick ও Conflict Fix — VPS সহ বাংলা Tutorial">
+  <meta property="og:description" content="Practical Git বাংলা handbook: selected commit push, merge conflict, reset, reflog এবং VPS workflow।">
+  <meta property="og:url" content="https://softkroy.com/git-merge-push-recovery-bangla-tutorial/">
+  <meta property="og:site_name" content="SOFTKROY">
+  <meta property="og:locale" content="bn_BD">
+  <meta property="og:image" content="https://softkroy.com/assets/images/git-bangla-tutorial-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Git Merge, Push, Cherry-pick ও Conflict Fix — VPS সহ বাংলা Tutorial">
+  <meta name="twitter:description" content="Practical example, Git tree এবং copyable terminal command সহ বাংলা Git guide।">
+  <meta name="twitter:image" content="https://softkroy.com/assets/images/git-bangla-tutorial-cover.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://softkroy.com/git-merge-push-recovery-bangla-tutorial/#webpage",
+        "url": "https://softkroy.com/git-merge-push-recovery-bangla-tutorial/",
+        "name": "Git Merge, Push, Cherry-pick ও Conflict Fix — VPS সহ পূর্ণাঙ্গ বাংলা Tutorial",
+        "inLanguage": "bn-BD",
+        "isPartOf": {"@type":"WebSite","name":"SOFTKROY","url":"https://softkroy.com/"}
+      },
+      {
+        "@type": "Article",
+        "@id": "https://softkroy.com/git-merge-push-recovery-bangla-tutorial/#article",
+        "mainEntityOfPage": {"@id":"https://softkroy.com/git-merge-push-recovery-bangla-tutorial/#webpage"},
+        "headline": "Git Merge, Push, Cherry-pick ও Conflict Fix — VPS সহ পূর্ণাঙ্গ বাংলা Tutorial",
+        "description": "Git repository setup থেকে selected commit push, reset, reflog এবং VPS merge conflict fix পর্যন্ত practical বাংলা tutorial।",
+        "image": ["https://softkroy.com/assets/images/git-bangla-tutorial-cover.jpg"],
+        "author": {"@type":"Organization","name":"SOFTKROY","url":"https://softkroy.com/"},
+        "publisher": {"@type":"Organization","name":"SOFTKROY","url":"https://softkroy.com/"},
+        "datePublished": "2026-06-06",
+        "dateModified": "2026-06-06",
+        "inLanguage": "bn-BD"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://softkroy.com/git-merge-push-recovery-bangla-tutorial/#breadcrumb",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://softkroy.com/"},
+          {"@type":"ListItem","position":2,"name":"Tutorials","item":"https://softkroy.com/tutorials/"},
+          {"@type":"ListItem","position":3,"name":"Git বাংলা Tutorial","item":"https://softkroy.com/git-merge-push-recovery-bangla-tutorial/"}
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Noto Sans Bengali','Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    body { font-family: 'Noto Sans Bengali','Inter',sans-serif; }
+    code, pre { font-family: 'JetBrains Mono',monospace; }
+    .article-body p { margin-top: .75rem; margin-bottom: .75rem; }
+    .article-body h3 { margin-top: 1rem; color: #fff; font-size: 1.08rem; font-weight: 800; }
+    .article-body code:not(pre code) { border: 1px solid rgba(100,116,139,.45); border-radius: .45rem; background: rgba(15,23,42,.85); padding: .12rem .38rem; color: #fdba74; font-size: .86em; }
+    .mini-card { display:flex; flex-direction:column; gap:.35rem; border:1px solid rgba(71,85,105,.7); border-radius:1rem; background:rgba(15,23,42,.68); padding:1rem; }
+    .mini-card strong { color:#fdba74; } .mini-card span { color:#cbd5e1; font-size:.9rem; line-height:1.65; }
+    .issue-card { border:1px solid rgba(71,85,105,.7); border-radius:1.25rem; background:rgba(15,23,42,.55); padding:1rem; }
+    .issue-card h3 { margin-top:0; color:#fdba74; }
+    .nav-link.active { background:rgba(249,115,22,.16); color:#fff; box-shadow: inset 3px 0 0 #f97316; }
+    .code-content { tab-size:2; }
+    .light body { background:#f8fafc; color:#0f172a; }
+    .light .site-shell { background:#f8fafc; }
+    .light .light-card { background:rgba(255,255,255,.92)!important; border-color:#cbd5e1!important; color:#0f172a!important; }
+    @media print {
+      #desktopSidebar,#mobileFab,#backToTop,#mobileDrawer,#drawerOverlay,#themeToggle,#topSearch,.copy-btn { display:none!important; }
+      body { background:white!important; color:#111827!important; }
+      .doc-section { break-inside:avoid; border:1px solid #d1d5db!important; background:white!important; color:#111827!important; box-shadow:none!important; }
+      .doc-section h2,.doc-section h3 { color:#111827!important; }
+      .doc-section p,.doc-section li { color:#374151!important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-orange-400/30 selection:text-white">
+  <div id="progressBar" class="fixed inset-x-0 top-0 z-[80] h-1 origin-left scale-x-0 bg-gradient-to-r from-orange-500 via-amber-300 to-sky-400"></div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-4 py-3 lg:px-6">
+      <a href="#top" class="flex min-w-0 items-center gap-3">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-orange-500 text-xl font-black text-white shadow-lg shadow-orange-500/20">G</span>
+        <span class="min-w-0"><strong class="block truncate text-sm font-black text-white sm:text-base">Git বাংলা Handbook</strong><small class="block truncate text-[11px] text-slate-400 sm:text-xs">Merge · Push · Recovery · VPS</small></span>
+      </a>
+      <div class="flex items-center gap-2">
+        <button id="topSearch" type="button" class="hidden items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-orange-400 hover:text-white sm:flex" aria-label="Index search focus"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><span>Search index</span></button>
+        <button id="themeToggle" type="button" class="grid h-10 w-10 place-items-center rounded-xl border border-slate-700 bg-slate-900 text-slate-300 transition hover:border-orange-400 hover:text-white" aria-label="Theme পরিবর্তন করুন"><span id="themeIcon">☾</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div id="top" class="mx-auto max-w-[1600px] px-4 py-5 lg:px-6">
+    <nav aria-label="Breadcrumb" class="mb-5 flex flex-wrap items-center gap-2 text-xs text-slate-400"><a href="https://softkroy.com/" class="hover:text-orange-300">Home</a><span>›</span><a href="https://softkroy.com/tutorials/" class="hover:text-orange-300">Tutorials</a><span>›</span><span class="text-slate-200">Git বাংলা Tutorial</span></nav>
+
+    <section class="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-orange-950/40 p-6 shadow-2xl shadow-black/20 sm:p-9">
+      <div class="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-500/15 blur-3xl"></div>
+      <div class="relative max-w-4xl">
+        <div class="mb-4 flex flex-wrap gap-2"><span class="rounded-full border border-orange-400/30 bg-orange-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-orange-300">Bangla Git Tutorial</span><span class="rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-sky-300">Beginner → Advanced</span><span class="rounded-full border border-violet-400/30 bg-violet-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-violet-300">VPS Ready</span></div>
+        <h1 class="text-3xl font-black leading-tight text-white sm:text-5xl">Git Merge, Push, Cherry-pick ও Conflict Fix</h1>
+        <p class="mt-4 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">Brand-new repository setup থেকে selected commit push, ভুল commit split, reset, reflog এবং VPS terminal merge conflict fix—সবকিছু practical example, Git tree এবং copyable command সহ।</p>
+        <div class="mt-5 flex flex-wrap gap-3 text-xs font-semibold text-slate-300"><span>📚 ২৫টি chapter</span><span>🧪 Practical examples</span><span>🌳 Before / after tree</span><span>📋 Copyable commands</span></div>
+      </div>
+    </section>
+
+    <aside class="my-5 rounded-3xl border border-amber-400/30 bg-amber-500/10 p-5 shadow-xl shadow-amber-950/10">
+      <div class="flex items-start gap-3"><span class="text-2xl">⚠️</span><div><h2 class="text-lg font-black text-amber-100">Production server-এ pull, merge, rebase বা reset চালানোর আগে</h2><p class="mt-1 text-sm leading-7 text-amber-50/90">প্রথমে current state capture করুন। সমস্যা হলে এই snapshot আপনাকে দ্রুত decision নিতে সাহায্য করবে।</p></div></div>
+      <div class="mt-3"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">emergency checklist</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git branch --show-current
+git remote -v
+git fetch --all
+git log --oneline --graph --decorate --all -n 20
+git branch backup-before-change</code></pre>
+    </div></div>
+    </aside>
+
+    <div class="grid gap-5 lg:grid-cols-[290px_minmax(0,1fr)]">
+      <aside id="desktopSidebar" class="hidden lg:block">
+        <div class="sticky top-[78px] max-h-[calc(100vh-95px)] overflow-y-auto rounded-3xl border border-slate-800 bg-slate-900/75 p-3 shadow-xl shadow-black/10 backdrop-blur">
+          <label class="mb-3 block"><span class="sr-only">Index search</span><div class="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2"><svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input id="desktopSearch" type="search" placeholder="Section search..." class="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"></div></label>
+          <nav aria-label="Tutorial index" class="space-y-2"><details class="nav-group" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>শুরু করুন</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#git-basics" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">01</span><span>Git কীভাবে কাজ করে</span></a><a href="#new-project-push" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">02</span><span>Brand-new project push</span></a><a href="#manual-git-config" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">03</span><span>Manual .git/config</span></a><a href="#project-identity" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">04</span><span>Project identity</span></a></div>
+        </details><details class="nav-group" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Remote Management</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#multiple-remotes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">05</span><span>Multiple remote</span></a><a href="#remote-maintenance" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">06</span><span>Remote URL maintenance</span></a><a href="#ahead-behind" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">07</span><span>Ahead ও behind</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Branch Workflow</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#fetch-pull-merge-rebase" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">08</span><span>Fetch, pull, merge, rebase</span></a><a href="#branch-workflow" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">09</span><span>Feature branch flow</span></a><a href="#stash-before-pull" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">10</span><span>Stash before pull</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Commit Management</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#cherry-pick" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">11</span><span>Cherry-pick</span></a><a href="#selected-pending-push" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">12</span><span>Selected commit push</span></a><a href="#split-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">13</span><span>Commit split</span></a><a href="#amend-last-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">14</span><span>Amend last commit</span></a><a href="#unstage-file" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">15</span><span>Unstage file</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Recovery</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#discard-local-changes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">16</span><span>Discard local changes</span></a><a href="#revert-pushed-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">17</span><span>Revert pushed commit</span></a><a href="#reset-modes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">18</span><span>Reset modes</span></a><a href="#cancel-bad-merge" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">19</span><span>Cancel bad merge</span></a><a href="#rescue-stable-branch" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">20</span><span>Stable rescue branch</span></a><a href="#reflog-recovery" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">21</span><span>Reflog recovery</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>VPS Guide</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#vps-conflict-fix" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">22</span><span>Terminal conflict fix</span></a><a href="#production-safety" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">23</span><span>Production safety</span></a><a href="#common-errors" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">24</span><span>Common errors</span></a><a href="#quick-reference" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">25</span><span>Quick reference</span></a></div>
+        </details></nav>
+        </div>
+      </aside>
+
+      <main class="min-w-0">
+        <article class="space-y-5"><section id="git-basics" data-section-title="Git কীভাবে কাজ করে" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">MENTAL MODEL</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">01</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Git কীভাবে কাজ করে</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Git শেখার সবচেয়ে গুরুত্বপূর্ণ ধাপ হলো চারটি জায়গার পার্থক্য বোঝা: Working Directory, Staging Area, Local Repository এবং Remote Repository।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন আপনি <code>ProductController.php</code> file edit করলেন। শুধু file save করলে GitHub-এ change যায় না। Git-কে আলাদা করে বলতে হয় কোন file commit হবে এবং কখন remote repository-তে পাঠাতে হবে।</p>
+<figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Git-এর চারটি স্তর</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>┌──────────────────────┐
+│ Working Directory    │  ← file edit করেছেন
+└──────────┬───────────┘
+           │ git add ProductController.php
+           ▼
+┌──────────────────────┐
+│ Staging Area         │  ← next commit-এর নির্বাচিত file
+└──────────┬───────────┘
+           │ git commit -m &quot;Fix product update&quot;
+           ▼
+┌──────────────────────┐
+│ Local Repository     │  ← local commit history
+└──────────┬───────────┘
+           │ git push origin main
+           ▼
+┌──────────────────────┐
+│ Remote Repository    │  ← GitHub / GitLab / VPS repo
+└──────────────────────┘</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git add app/Http/Controllers/ProductController.php
+git commit -m &quot;Fix product update&quot;
+git push origin main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>মনে রাখুন</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>git add</code> file নির্বাচন করে, <code>git commit</code> local snapshot তৈরি করে, আর <code>git push</code> commit remote repository-তে পাঠায়।</div>
+    </aside></div>
+    </section><section id="new-project-push" data-section-title="Brand-new project Git-এ connect ও push" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">SETUP</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">02</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Brand-new project Git-এ connect ও push</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">নতুন Laravel, React বা অন্য project প্রথমবার Git repository-তে পাঠানোর জন্য এই flow ব্যবহার করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন আপনার folder-এর নাম <code>retina-backend-api</code> এবং remote repository URL হলো <code>git@github.com:company/retina-backend-api.git</code>।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>cd retina-backend-api
+git init
+git branch -M main
+git add .
+git commit -m &quot;Initial project setup&quot;
+git remote add origin git@github.com:company/retina-backend-api.git
+git push -u origin main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>কেন -u ব্যবহার করবেন?</span></div>
+      <div class="text-sm leading-7 opacity-95">প্রথম push-এ <code>-u</code> বা <code>--set-upstream</code> দিলে local <code>main</code> branch কোন remote branch track করবে Git তা মনে রাখে। পরেরবার শুধু <code>git push</code> লিখলেও যথেষ্ট।</div>
+    </aside><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">verification</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status -sb
+git remote -v
+git branch -vv</code></pre>
+    </div></div>
+    </section><section id="manual-git-config" data-section-title="Manual .git/config setup" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CONFIG</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">03</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Manual .git/config setup</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">কখনো VPS-এ remote URL বা upstream ভুল থাকে। Command-এর পাশাপাশি সরাসরি .git/config file edit করেও fix করা যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>Project root folder-এর ভেতরে hidden <code>.git/config</code> file থাকে। Linux VPS-এ দেখতে পারেন:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>cd /var/www/retina-backend-api
+nano .git/config</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">ini</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+
+[remote &quot;origin&quot;]
+    url = git@github.com:company/retina-backend-api.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[branch &quot;main&quot;]
+    remote = origin
+    merge = refs/heads/main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Config line-এর অর্থ</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>[remote "origin"]</code> repository address ধরে রাখে। <code>[branch "main"]</code> local main কোন remote branch track করবে তা নির্ধারণ করে।</div>
+    </aside></div>
+    </section><section id="project-identity" data-section-title="Project-specific username ও email সেট করা" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CONFIG</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">04</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Project-specific username ও email সেট করা</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">একই computer-এ personal এবং office project থাকলে প্রতিটি project-এর author identity আলাদা রাখা উচিত।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>Global config সব project-এর default identity। Local config শুধু বর্তমান project-এর জন্য global value override করে।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">global config</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git config --global user.name &quot;Sumon Ahmed&quot;
+git config --global user.email &quot;personal@example.com&quot;</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">project config</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>cd retina-backend-api
+git config user.name &quot;Company Developer&quot;
+git config user.email &quot;developer@company.com&quot;</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">check config</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git config user.name
+git config user.email
+git config --list --local</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>Practical example</span></div>
+      <div class="text-sm leading-7 opacity-95">Personal GitHub project-এ personal email এবং company repository-তে office email ব্যবহার করলে commit history পরিষ্কার থাকে।</div>
+    </aside></div>
+    </section><section id="multiple-remotes" data-section-title="একই project multiple remote-এ connect করা" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">REMOTE</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">05</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">একই project multiple remote-এ connect করা</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">একটি codebase একই সঙ্গে GitHub, GitLab backup এবং VPS bare repository-তে push করা যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>Remote-এর নাম আপনার ইচ্ছামতো দেওয়া যায়। সাধারণ convention হলো primary repository-এর নাম <code>origin</code> রাখা।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git remote add origin git@github.com:company/project.git
+git remote add backup git@gitlab.com:company/project.git
+git remote add production deploy@server:/var/repos/project.git
+git remote -v</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Multiple remote flow</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>                         ┌──────────────────────┐
+                         │ origin / GitHub      │
+                         └──────────▲───────────┘
+                                    │
+┌──────────────────┐                │
+│ Local main       ├────────────────┼────────────────┐
+└──────────────────┘                │                │
+                         ┌──────────▼──────────┐  ┌──▼────────────────┐
+                         │ backup / GitLab     │  │ production / VPS │
+                         └─────────────────────┘  └───────────────────┘</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">push examples</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git push origin main
+git push backup main
+git push production main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Manual config example</span></div>
+      <div class="text-sm leading-7 opacity-95"><pre class="mt-2 overflow-x-auto rounded-xl bg-slate-950/60 p-3 text-xs leading-6">[remote "backup"]
+    url = git@gitlab.com:company/project.git
+    fetch = +refs/heads/*:refs/remotes/backup/*</pre></div>
+    </aside></div>
+    </section><section id="remote-maintenance" data-section-title="Remote URL check, rename ও remove" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">REMOTE</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">06</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Remote URL check, rename ও remove</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Repository transfer হলে remote URL update করতে হয়। ভুল remote-এ push এড়াতে push-এর আগে remote check করা ভালো।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git remote -v
+git remote get-url origin
+git remote set-url origin git@github.com:new-company/project.git
+git remote rename backup archive
+git remote remove archive
+git remote -v</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>Safe habit</span></div>
+      <div class="text-sm leading-7 opacity-95">Production project-এ push করার আগে <code>git remote -v</code> চালিয়ে URL verify করুন।</div>
+    </aside></div>
+    </section><section id="ahead-behind" data-section-title="কত commit push হয়নি এবং remote কত commit এগিয়ে আছে" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">INSPECTION</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">07</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">কত commit push হয়নি এবং remote কত commit এগিয়ে আছে</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Local branch remote branch-এর তুলনায় ahead বা behind হতে পারে। Push বা pull করার আগে এই status বুঝুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>আপনার terminal-এ যদি দেখা যায়:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">terminal output</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status -sb
+## main...origin/main [ahead 3, behind 1]</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Ahead ও behind</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>                    R1  ← remote-only commit
+                    │
+A ── B ─────────────┘     origin/main
+     │
+     └── L1 ── L2 ── L3  local main
+
+behind 1 → remote-এ ১টি commit আছে, local-এ নেই
+ahead 3  → local-এ ৩টি commit আছে, remote-এ নেই</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git fetch origin
+git status -sb
+git rev-list --left-right --count origin/main...HEAD
+git log --oneline origin/main..HEAD
+git log --oneline HEAD..origin/main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Output বুঝুন</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>git log --oneline origin/main..HEAD</code> local pending commit দেখায়। বিপরীত range <code>HEAD..origin/main</code> remote-only commit দেখায়।</div>
+    </aside></div>
+    </section><section id="fetch-pull-merge-rebase" data-section-title="Fetch, pull, merge ও rebase বুঝে ব্যবহার করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CORE</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BRANCHING</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">08</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Fetch, pull, merge ও rebase বুঝে ব্যবহার করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">এই চারটি command দেখতে কাছাকাছি হলেও কাজ আলাদা। ভুল command history জটিল করতে পারে।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="grid gap-3 sm:grid-cols-2">
+<div class="mini-card"><strong>git fetch</strong><span>Remote update-এর খবর আনে, working files বদলায় না।</span></div>
+<div class="mini-card"><strong>git pull</strong><span>Fetch করে update integrate করে।</span></div>
+<div class="mini-card"><strong>git merge</strong><span>দুই history যুক্ত করে, প্রয়োজনে merge commit বানায়।</span></div>
+<div class="mini-card"><strong>git rebase</strong><span>Local commit নতুন base-এর উপর replay করে।</span></div>
+</div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Merge বনাম rebase</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>Before:
+A ── B ── C          origin/main
+      │
+      └── D ── E     local main
+
+Merge করলে:
+A ── B ── C ───────┐
+      │             │
+      └── D ── E ── M
+
+Rebase করলে:
+A ── B ── C ── D&#x27; ── E&#x27; </code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">merge flow</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git fetch origin
+git merge origin/main</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">rebase flow</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git pull --rebase origin main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>⚠️</span><span>Shared branch-এ সতর্কতা</span></div>
+      <div class="text-sm leading-7 opacity-95">ইতোমধ্যে অন্য developer ব্যবহার করছেন এমন shared commit rebase করলে hash বদলে যায়। Shared history rewrite না করাই নিরাপদ।</div>
+    </aside></div>
+    </section><section id="branch-workflow" data-section-title="Feature branch তৈরি, switch ও merge" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">WORKFLOW</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">09</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Feature branch তৈরি, switch ও merge</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Live main branch-এ সরাসরি কাজ না করে আলাদা branch-এ feature বা bug fix করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন POS order edit flow-তে duplicate stock decrement fix করবেন।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git switch -c fix-product-stock
+# code edit করুন
+git add .
+git commit -m &quot;Fix duplicate stock decrement&quot;
+git switch main
+git merge fix-product-stock</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Feature branch merge</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>A ── B ─────────── M       main
+      │             ▲
+      └── C ── D ───┘       fix-product-stock</code></pre>
+    </figure><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Branch naming pattern</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>feature/crm-pipeline</code>, <code>fix/order-stock</code>, <code>hotfix/payment-timeout</code> এর মতো অর্থপূর্ণ নাম ব্যবহার করুন।</div>
+    </aside></div>
+    </section><section id="stash-before-pull" data-section-title="অসমাপ্ত local কাজ safe রেখে pull করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">VPS</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">10</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">অসমাপ্ত local কাজ safe রেখে pull করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">VPS বা local machine-এ uncommitted edit থাকলে pull করার আগে stash ব্যবহার করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git stash -u
+git pull origin main
+git stash pop</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Stash workflow</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>Working changes
+      │
+      │ git stash -u
+      ▼
+Temporary safe box
+      │
+      │ git pull origin main
+      ▼
+Updated branch
+      │
+      │ git stash pop
+      ▼
+Working changes ফিরে আসবে</code></pre>
+    </figure><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>কেন -u?</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>git stash -u</code> untracked file-ও stash করে। শুধু <code>git stash</code> দিলে untracked file সাধারণত থেকে যায়।</div>
+    </aside></div>
+    </section><section id="cherry-pick" data-section-title="Cherry-pick: একটি নির্দিষ্ট commit অন্য branch-এ নেওয়া" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">ADVANCED</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">11</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Cherry-pick: একটি নির্দিষ্ট commit অন্য branch-এ নেওয়া</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">কোনো branch-এর সব commit নয়, শুধু একটি প্রয়োজনীয় commit অন্য branch-এ নিতে cherry-pick ব্যবহার করা হয়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন payment branch-এর <code>B</code> commit main-এ দরকার, কিন্তু branch-এর অন্য commit এখন দরকার নেই।</p><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Cherry-pick flow</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>feature-payment:
+A ── B ── C
+
+main:
+A ── D
+
+B cherry-pick করার পরে:
+A ── D ── B&#x27;   main</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git switch main
+git status
+git cherry-pick &lt;commit-hash&gt;</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Hash কেন বদলায়?</span></div>
+      <div class="text-sm leading-7 opacity-95">Cherry-pick একই change নতুন parent commit-এর উপর বসায়। তাই নতুন commit-এর hash সাধারণত original commit hash থেকে আলাদা হয়।</div>
+    </aside><aside class="my-4 rounded-2xl border border-violet-400/30 bg-violet-500/10 text-violet-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛟</span><span>Conflict হলে</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>git status</code> দেখে file fix করুন, তারপর <code>git add .</code> এবং <code>git cherry-pick --continue</code> চালান। বাতিল করতে <code>git cherry-pick --abort</code>।</div>
+    </aside></div>
+    </section><section id="selected-pending-push" data-section-title="Pending commit থেকে শুধু একটি selected commit push" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">ADVANCED</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">FEATURED</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">SAFE WORKFLOW</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">12</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Pending commit থেকে শুধু একটি selected commit push</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Local main-এ একাধিক pending commit থাকলেও কখনো শুধু একটি জরুরি commit remote main-এ পাঠাতে হয়। এই section-এ আপনার বাস্তব PM2 example ব্যবহার করা হয়েছে।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন output হলো:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">pending commits</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git log --oneline origin/main..HEAD
+6a8a566 Configure PM2 log rotation for backend logs
+939dfad remove console
+0acd13a add reference with bkash invoice no.</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Before tree</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>origin/main
+   │
+   └── 0acd13a  add reference with bkash invoice no.
+         │
+         └── 939dfad  remove console
+               │
+               └── 6a8a566  Configure PM2 log rotation
+
+Target: শুধু 6a8a566 push করতে হবে</code></pre>
+    </figure><aside class="my-4 rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>⚠️</span><span>কেন সরাসরি git push origin main নয়?</span></div>
+      <div class="text-sm leading-7 opacity-95">সরাসরি push করলে main branch-এর reachable সব pending commit remote-এ চলে যাবে। এখানে temporary branch থেকে cherry-pick করতে হবে।</div>
+    </aside><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">step 1 — selected push</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git fetch origin
+git branch backup-main-before-single-push
+git switch -c push-only-pm2-log origin/main
+git cherry-pick 6a8a566
+git push origin HEAD:main</code></pre>
+    </div><p class="mt-4">এখন remote main-এ PM2 change চলে গেছে। Local main পুনর্গঠন করে বাকি দুইটি commit pending রাখুন:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-red-500/40 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">step 2 — rebuild local main</span><span class="ml-2 rounded-full border border-red-500/40 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-300">Danger</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git switch main
+git fetch origin
+git reset --hard origin/main
+git cherry-pick 0acd13a
+git cherry-pick 939dfad
+git branch -D push-only-pm2-log</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">After tree</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>origin/main
+   │
+   └── PM2 log rotation commit
+         │
+         └── 0acd13a  add reference with bkash invoice no.  ← local pending
+               │
+               └── 939dfad  remove console                  ← local pending</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">verification</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status -sb
+git log --oneline origin/main..HEAD</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-red-400/30 bg-red-500/10 text-red-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛑</span><span>Reset-এর আগে বাধ্যতামূলক safety</span></div>
+      <div class="text-sm leading-7 opacity-95"><code>git status</code> clean কিনা দেখুন এবং backup branch তৈরি করুন। Uncommitted tracked change থাকলে <code>git reset --hard</code> সেগুলো delete করতে পারে।</div>
+    </aside></div>
+    </section><section id="split-commit" data-section-title="ভুল commit split করুন: ৫টি file থেকে ৩টি + ২টি commit" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">13</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">ভুল commit split করুন: ৫টি file থেকে ৩টি + ২টি commit</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">একটি commit-এ বেশি file চলে গেলে সেটিকে আলাদা logical commit-এ ভাগ করা যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন একটি commit-এ পাঁচটি file চলে গেছে:</p>
+<ul class="list-disc space-y-1 pl-6"><li>ProductController.php</li><li>OrderController.php</li><li>StockService.php</li><li>sidebar.blade.php</li><li>routes/web.php</li></ul>
+<p class="mt-3">আপনি চান প্রথম তিনটি logic file এক commit-এ এবং শেষ দুইটি UI/route file অন্য commit-এ থাকুক।</p><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Commit split flow</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>Before:
+A ── X [A, B, C, D, E]
+
+After reset:
+A   + পাঁচটি modified file
+
+Final:
+A ── Y [A, B, C] ── Z [D, E]</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git reset HEAD~1
+git status
+
+git add app/Http/Controllers/ProductController.php
+git add app/Http/Controllers/OrderController.php
+git add app/Services/StockService.php
+git commit -m &quot;Fix product stock logic&quot;
+
+git add resources/views/backend/sidebar.blade.php
+git add routes/web.php
+git commit -m &quot;Update sidebar and routes&quot;</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>কেন plain git reset?</span></div>
+      <div class="text-sm leading-7 opacity-95">Default <code>git reset HEAD~1</code> হলো mixed reset। Last commit history থেকে সরে যায়, কিন্তু file-এর edit working directory-তে থাকে। তাই নতুন করে file group বেছে commit করা যায়।</div>
+    </aside></div>
+    </section><section id="amend-last-commit" data-section-title="Last commit amend করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">COMMIT</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">14</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Last commit amend করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Commit message ভুল হলে বা একটি file add করতে ভুলে গেলে নতুন commit না বানিয়ে last commit update করা যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><h3>Scenario A — message ভুল</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git commit --amend -m &quot;Fix order stock calculation&quot;</code></pre>
+    </div><h3 class="mt-5">Scenario B — file বাদ পড়ে গেছে</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git add app/Services/StockService.php
+git commit --amend --no-edit</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>⚠️</span><span>Pushed commit amend করবেন?</span></div>
+      <div class="text-sm leading-7 opacity-95">Remote-এ push হয়ে যাওয়া shared commit amend করলে hash বদলে যায়। Team repository-তে সাধারণত নতুন corrective commit বা revert ব্যবহার করুন।</div>
+    </aside></div>
+    </section><section id="unstage-file" data-section-title="নির্দিষ্ট file commit থেকে বাদ দিন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BEGINNER</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">STAGING</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">15</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">নির্দিষ্ট file commit থেকে বাদ দিন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Accidentally .env বা অন্য sensitive file staging area-তে চলে গেলে commit করার আগে unstage করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git restore --staged .env
+git status</code></pre>
+    </div><p>তারপর <code>.gitignore</code> file-এ যোগ করুন:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">.gitignore</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>.env
+node_modules/
+vendor/
+*.log</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>⚠️</span><span>Already tracked হলে</span></div>
+      <div class="text-sm leading-7 opacity-95">শুধু .gitignore যথেষ্ট নয়। আগে <code>git rm --cached .env</code> চালিয়ে tracked list থেকে remove করতে হবে।</div>
+    </aside></div>
+    </section><section id="discard-local-changes" data-section-title="Uncommitted change বাদ দিন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CAUTION</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">16</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Uncommitted change বাদ দিন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">কোনো local edit আর দরকার না হলে restore ব্যবহার করুন। Discard করার আগে diff দেখা জরুরি।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">single file</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git diff
+git restore app/Http/Controllers/ProductController.php</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-red-500/40 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">all tracked files</span><span class="ml-2 rounded-full border border-red-500/40 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-300">Danger</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git diff
+git restore .</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-red-400/30 bg-red-500/10 text-red-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛑</span><span>সতর্কতা</span></div>
+      <div class="text-sm leading-7 opacity-95">Uncommitted change discard করার পরে সহজে recover নাও করা যেতে পারে। সন্দেহ থাকলে আগে <code>git stash -u</code> বা backup copy নিন।</div>
+    </aside></div>
+    </section><section id="revert-pushed-commit" data-section-title="Pushed commit safely undo করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">SAFE</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">17</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Pushed commit safely undo করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Remote-এ ভুল commit push হয়ে গেলে shared history rewrite না করে revert ব্যবহার করা সবচেয়ে নিরাপদ।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git log --oneline -n 10
+git revert &lt;bad-commit-hash&gt;
+git push origin main</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Safe revert</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>A ── B ── C ── R
+          │     └── R = Revert &quot;C&quot;
+          └── ভুল change history-তে আছে, কিন্তু effect reverse হয়েছে</code></pre>
+    </figure><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>Force push নয় কেন?</span></div>
+      <div class="text-sm leading-7 opacity-95">Team repository-তে force push অন্য developer-এর history ভেঙে দিতে পারে। Revert নতুন reversing commit তৈরি করে এবং audit trail রাখে।</div>
+    </aside></div>
+    </section><section id="reset-modes" data-section-title="git reset --soft, --mixed ও --hard বুঝুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">ADVANCED</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">DANGER</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">18</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">git reset --soft, --mixed ও --hard বুঝুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Reset branch pointer সরায়। Mode অনুযায়ী staging area ও working file-এর আচরণ বদলায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="overflow-x-auto rounded-2xl border border-slate-700/70"><table class="w-full min-w-[720px] text-left text-sm"><thead class="bg-slate-950/80 text-orange-300"><tr><th class="p-3">Command</th><th class="p-3">Branch pointer</th><th class="p-3">Staging area</th><th class="p-3">Working files</th><th class="p-3">ব্যবহার</th></tr></thead><tbody class="divide-y divide-slate-800"><tr><td class="p-3"><code>git reset --soft HEAD~1</code></td><td class="p-3">পিছাবে</td><td class="p-3">Staged থাকবে</td><td class="p-3">থাকবে</td><td class="p-3">Commit message বা grouping বদলাতে</td></tr><tr><td class="p-3"><code>git reset HEAD~1</code></td><td class="p-3">পিছাবে</td><td class="p-3">Unstaged হবে</td><td class="p-3">থাকবে</td><td class="p-3">Commit split করতে</td></tr><tr><td class="p-3"><code>git reset --hard HEAD~1</code></td><td class="p-3">পিছাবে</td><td class="p-3">Reset হবে</td><td class="p-3">Tracked change হারাবে</td><td class="p-3">Exact rollback, খুব সতর্কভাবে</td></tr></tbody></table></div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-red-500/40 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">hard reset example</span><span class="ml-2 rounded-full border border-red-500/40 bg-red-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-300">Danger</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git branch backup-before-hard-reset
+git fetch origin
+git reset --hard origin/main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-red-400/30 bg-red-500/10 text-red-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛑</span><span>git reset --hard origin/main কী করে?</span></div>
+      <div class="text-sm leading-7 opacity-95">Current local branch pointer, staging area এবং tracked working file-কে <code>origin/main</code>-এর exact অবস্থায় নেয়। Local-only commit current branch থেকে সরে যায়। Backup branch থাকলে commit recover করা সহজ হয়।</div>
+    </aside></div>
+    </section><section id="cancel-bad-merge" data-section-title="ভুল merge বা rebase cancel করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">VPS</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">19</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">ভুল merge বা rebase cancel করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Merge conflict শুরু হওয়ার পরে ভুল বুঝলে resolve না করে safely abort করা যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><h3>Merge চলমান থাকলে</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git merge --abort</code></pre>
+    </div><h3 class="mt-5">Rebase চলমান থাকলে</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status
+git rebase --abort</code></pre>
+    </div><h3 class="mt-5">Merge commit হয়ে গেলে</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git log --oneline --graph -n 10
+git revert -m 1 &lt;merge-commit-hash&gt;
+git push origin main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>Production tip</span></div>
+      <div class="text-sm leading-7 opacity-95">VPS-এ merge conflict হলে panic করে file delete করবেন না। আগে <code>git status</code> এবং প্রয়োজন হলে <code>git merge --abort</code>।</div>
+    </aside></div>
+    </section><section id="rescue-stable-branch" data-section-title="Last stable version থেকে rescue branch তৈরি করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">BRANCH</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">20</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Last stable version থেকে rescue branch তৈরি করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Bad merge বা broken deployment-এর আগে যেই commit stable ছিল, সেই commit থেকে আলাদা branch তৈরি করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন <code>C</code> ছিল last stable commit, এরপর merge এবং deploy problem হয়েছে।</p><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Stable rescue branch</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>A ── B ── C ── M ── D    main
+          │
+          └────────────── stable-before-bad-merge</code></pre>
+    </figure><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git log --oneline --graph --decorate -n 20
+git switch -c stable-before-bad-merge &lt;commit-hash-of-C&gt;</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-violet-400/30 bg-violet-500/10 text-violet-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛟</span><span>Deployment use case</span></div>
+      <div class="text-sm leading-7 opacity-95">Rescue branch deploy করে live service restore করা যায়। এরপর main branch fix করে test শেষে পুনরায় deploy করুন।</div>
+    </aside></div>
+    </section><section id="reflog-recovery" data-section-title="git reflog দিয়ে হারানো commit উদ্ধার" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">RECOVERY</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">ADVANCED</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">21</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">git reflog দিয়ে হারানো commit উদ্ধার</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">ভুল reset, checkout বা rebase-এর পর commit log-এ না দেখালেও reflog থেকে পুরোনো HEAD খুঁজে পাওয়া যায়।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git reflog</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">example output</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>6a8a566 HEAD@{0}: reset: moving to origin/main
+939dfad HEAD@{1}: commit: remove console
+0acd13a HEAD@{2}: commit: add reference with bkash invoice no.</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">create rescue branch</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git switch -c rescue-lost-work 939dfad</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 text-sky-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>💡</span><span>Reflog local-only</span></div>
+      <div class="text-sm leading-7 opacity-95">Reflog আপনার local repository-র reference movement history। অন্য developer-এর machine বা remote repository-তে আপনার local reflog থাকবে না।</div>
+    </aside></div>
+    </section><section id="vps-conflict-fix" data-section-title="VPS terminal-এ merge conflict fix করুন" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">VPS</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CONFLICT</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">PRACTICAL</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">22</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">VPS terminal-এ merge conflict fix করুন</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">GUI ছাড়া production server-এ conflict resolve করার step-by-step workflow।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><p>ধরুন pull করার সময় terminal দেখালো:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">terminal output</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git pull origin main
+CONFLICT (content): Merge conflict in app/Services/OrderService.php
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+    </div><h3>Step 1 — conflicted file দেখুন</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status</code></pre>
+    </div><h3 class="mt-5">Step 2 — nano দিয়ে file খুলুন</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>nano app/Services/OrderService.php</code></pre>
+    </div><h3 class="mt-5">Step 3 — conflict marker বুঝুন</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">conflict marker</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+$stock = $product-&gt;stock - $quantity;
+=======
+$stock = $warehouseStock-&gt;quantity - $quantity;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/main</code></pre>
+    </div><p>সঠিক code রেখে <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code> এবং <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> marker delete করুন:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">resolved code</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>$stock = $warehouseStock-&gt;quantity - $quantity;</code></pre>
+    </div><h3 class="mt-5">Step 4 — resolve complete করুন</h3><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">merge হলে</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git add app/Services/OrderService.php
+git commit -m &quot;Resolve order stock merge conflict&quot;</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">rebase হলে</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git add app/Services/OrderService.php
+git rebase --continue</code></pre>
+    </div><figure class="my-5 overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-950/90">
+      <figcaption class="border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-300">Terminal conflict workflow</figcaption>
+      <pre class="overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git pull
+   │
+   ▼
+Conflict detected
+   │
+   ▼
+git status
+   │
+   ▼
+nano conflicted-file.php
+   │
+   ▼
+Remove markers, keep correct code
+   │
+   ▼
+git add file.php
+   │
+   ├── Merge হলে  → git commit
+   └── Rebase হলে → git rebase --continue</code></pre>
+    </figure><aside class="my-4 rounded-2xl border border-violet-400/30 bg-violet-500/10 text-violet-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>🛟</span><span>Abort option</span></div>
+      <div class="text-sm leading-7 opacity-95">Resolve করতে না চাইলে merge-এর ক্ষেত্রে <code>git merge --abort</code> এবং rebase-এর ক্ষেত্রে <code>git rebase --abort</code>।</div>
+    </aside></div>
+    </section><section id="production-safety" data-section-title="Production server safety workflow" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">VPS</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">SAFETY</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">23</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Production server safety workflow</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Live server-এ pull করার আগে একটি consistent checklist অনুসরণ করুন। এতে accidental overwrite এবং downtime কমে।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">pre-deploy checks</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>cd /var/www/your-project
+git status
+git branch --show-current
+git remote -v
+git fetch --all
+git log --oneline --graph --decorate --all -n 20</code></pre>
+    </div><p>Working tree clean হলে:</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">safe fast-forward pull</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git pull --ff-only origin main</code></pre>
+    </div><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>কেন --ff-only?</span></div>
+      <div class="text-sm leading-7 opacity-95">Remote history সরাসরি সামনে এগিয়ে থাকলেই pull সফল হবে। Unexpected merge commit তৈরি হবে না। Diverged history থাকলে command থেমে যাবে এবং আপনি আগে review করতে পারবেন।</div>
+    </aside><aside class="my-4 rounded-2xl border border-amber-400/30 bg-amber-500/10 text-amber-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>⚠️</span><span>VPS-এ local edit থাকলে</span></div>
+      <div class="text-sm leading-7 opacity-95">প্রথমে <code>git stash -u</code> অথবা config file backup নিন। Production-only secret সাধারণত Git-এর বাইরে environment file-এ রাখুন।</div>
+    </aside></div>
+    </section><section id="common-errors" data-section-title="Common Git errors ও quick solution" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">TROUBLESHOOTING</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">QUICK FIX</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">24</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Common Git errors ও quick solution</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">Regular development এবং VPS deployment-এ বারবার দেখা যায় এমন error-এর দ্রুত সমাধান।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="space-y-4">
+<div class="issue-card"><h3>non-fast-forward push rejected</h3><p>Remote-এ নতুন commit আছে। আগে fetch করে history দেখুন।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git fetch origin
+git status -sb
+git log --oneline --left-right origin/main...HEAD</code></pre>
+    </div></div>
+<div class="issue-card"><h3>fatal: not a git repository</h3><p>আপনি project root-এর বাইরে আছেন অথবা .git folder নেই।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>pwd
+ls -la
+cd /path/to/project</code></pre>
+    </div></div>
+<div class="issue-card"><h3>remote origin already exists</h3><p>নতুন remote add না করে existing URL update করুন।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git remote -v
+git remote set-url origin &lt;new-url&gt;</code></pre>
+    </div></div>
+<div class="issue-card"><h3>.gitignore দিয়েও file track হচ্ছে</h3><p>File আগে tracked হলে cached index থেকে remove করুন।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git rm --cached .env
+git commit -m &quot;Stop tracking environment file&quot;</code></pre>
+    </div></div>
+<div class="issue-card"><h3>detached HEAD</h3><p>কোনো commit hash checkout করেছেন। কাজ রাখতে branch বানান।</p><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">bash</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git switch -c rescue-detached-work</code></pre>
+    </div></div>
+</div></div>
+    </section><section id="quick-reference" data-section-title="Quick command reference" class="doc-section scroll-mt-24 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl shadow-black/10 backdrop-blur sm:p-7">
+      <div class="mb-4 flex flex-wrap items-center gap-2"><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">CHEAT SHEET</span><span class="rounded-full border border-slate-600 bg-slate-800/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-300">COPY READY</span></div>
+      <div class="mb-5 flex items-start gap-3">
+        <span class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl bg-orange-500/15 px-3 text-sm font-black text-orange-300">25</span>
+        <div>
+          <h2 class="text-2xl font-black leading-tight text-white sm:text-3xl">Quick command reference</h2>
+          <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300 sm:text-[15px]">সমস্যার মুহূর্তে দ্রুত প্রয়োজনীয় command খুঁজে পেতে এই compact list ব্যবহার করুন।</p>
+        </div>
+      </div>
+      <div class="article-body text-[15px] leading-8 text-slate-200"><div class="grid gap-4 lg:grid-cols-2"><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">inspect first</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git status -sb
+git branch --show-current
+git remote -v
+git fetch --all
+git log --oneline --graph --decorate --all -n 20</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">ahead / behind</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git log --oneline origin/main..HEAD
+git log --oneline HEAD..origin/main
+git rev-list --left-right --count origin/main...HEAD</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">safe update</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git stash -u
+git pull --ff-only origin main
+git stash pop</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">abort operations</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git merge --abort
+git rebase --abort
+git cherry-pick --abort</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">recovery</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git branch backup-before-change
+git reflog
+git switch -c rescue-branch &lt;commit-hash&gt;</code></pre>
+    </div><div class="code-shell group my-4 overflow-hidden rounded-2xl border border-slate-700/80 bg-[#07111f] shadow-xl shadow-black/10">
+      <div class="flex items-center justify-between border-b border-slate-700/70 bg-slate-900/80 px-4 py-2.5">
+        <div class="flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-300"><span class="h-2.5 w-2.5 rounded-full bg-red-400"></span><span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span><span class="ml-2">safe undo pushed commit</span></div>
+        <button type="button" class="copy-btn inline-flex items-center gap-1.5 rounded-lg border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-orange-400 hover:text-white" aria-label="কমান্ড কপি করুন">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre class="code-content overflow-x-auto p-4 text-[13px] leading-6 text-slate-200"><code>git revert &lt;commit-hash&gt;
+git push origin main</code></pre>
+    </div></div><aside class="my-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 text-emerald-100 p-4">
+      <div class="mb-1 flex items-center gap-2 font-bold"><span>✅</span><span>Golden rule</span></div>
+      <div class="text-sm leading-7 opacity-95">যে command বুঝেন না, production server-এ সেটি চালানোর আগে <code>git status</code>, backup branch এবং recent graph দেখুন।</div>
+    </aside></div>
+    </section></article>
+
+        <section id="faq" class="mt-5 rounded-3xl border border-slate-800 bg-slate-900/60 p-5 sm:p-7">
+          <div class="mb-5"><span class="rounded-full border border-sky-400/30 bg-sky-500/10 px-3 py-1 text-xs font-black uppercase tracking-[.16em] text-sky-300">FAQ</span><h2 class="mt-3 text-2xl font-black text-white sm:text-3xl">Frequently Asked Questions</h2></div>
+          <div class="space-y-3"><details class="faq-item rounded-2xl border border-slate-800 bg-slate-900/70 p-4"><summary class="cursor-pointer font-bold text-white">একটি pending commit আলাদাভাবে push করা যায়?</summary><p class="mt-3 text-sm leading-7 text-slate-300">হ্যাঁ। Temporary branch তৈরি করে target commit cherry-pick করুন এবং temporary branch থেকে remote main-এ push করুন। সরাসরি local main push করলে reachable pending commit-গুলো একসঙ্গে চলে যেতে পারে।</p></details><details class="faq-item rounded-2xl border border-slate-800 bg-slate-900/70 p-4"><summary class="cursor-pointer font-bold text-white">git reset --hard origin/main কি safe?</summary><p class="mt-3 text-sm leading-7 text-slate-300">Working tree clean এবং backup branch থাকলে নির্দিষ্ট workflow-তে ব্যবহার করা যায়। তবে এটি uncommitted tracked change delete করতে পারে। তাই আগে git status এবং backup branch বাধ্যতামূলক।</p></details><details class="faq-item rounded-2xl border border-slate-800 bg-slate-900/70 p-4"><summary class="cursor-pointer font-bold text-white">VPS-এ merge conflict হলে প্রথমে কী করব?</summary><p class="mt-3 text-sm leading-7 text-slate-300">প্রথমে git status চালিয়ে conflicted file দেখুন। Resolve করতে না চাইলে git merge --abort বা git rebase --abort চালান।</p></details><details class="faq-item rounded-2xl border border-slate-800 bg-slate-900/70 p-4"><summary class="cursor-pointer font-bold text-white">force push কখন ব্যবহার করা উচিত?</summary><p class="mt-3 text-sm leading-7 text-slate-300">Shared main branch-এ সাধারণত নয়। ব্যক্তিগত feature branch-এ history rewrite প্রয়োজন হলে সতর্কভাবে --force-with-lease ব্যবহার করা যায়।</p></details><details class="faq-item rounded-2xl border border-slate-800 bg-slate-900/70 p-4"><summary class="cursor-pointer font-bold text-white">হারানো commit কীভাবে recover করব?</summary><p class="mt-3 text-sm leading-7 text-slate-300">git reflog চালিয়ে পুরোনো HEAD বা commit hash খুঁজে rescue branch তৈরি করুন।</p></details></div>
+        </section>
+
+        <footer class="mt-6 rounded-3xl border border-slate-800 bg-slate-900/60 p-5 text-sm leading-7 text-slate-400 sm:p-7">
+          <p><strong class="text-white">Deployment note:</strong> এই standalone preview file Tailwind Play CDN ব্যবহার করে। Live production deployment-এর জন্য Tailwind CLI দিয়ে CSS compile করে minify করুন এবং canonical URL, OG image ও published date যাচাই করুন।</p>
+          <p class="mt-2">© 2026 SOFTKROY · Git বাংলা Handbook</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <div id="drawerOverlay" class="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-sm lg:hidden"></div>
+  <aside id="mobileDrawer" class="fixed inset-y-0 left-0 z-[70] w-[86vw] max-w-sm -translate-x-full border-r border-slate-800 bg-slate-950 p-4 shadow-2xl transition-transform duration-300 lg:hidden">
+    <div class="mb-4 flex items-center justify-between"><div><strong class="block text-white">Tutorial Index</strong><small class="text-slate-400">Chapter select করুন</small></div><button id="drawerClose" class="grid h-10 w-10 place-items-center rounded-xl border border-slate-700 bg-slate-900 text-slate-300" aria-label="Index বন্ধ করুন">✕</button></div>
+    <label class="mb-4 block"><div class="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2"><svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input id="mobileSearch" type="search" placeholder="Section search..." class="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"></div></label>
+    <nav aria-label="Mobile tutorial index" class="max-h-[calc(100vh-105px)] space-y-2 overflow-y-auto pr-1"><details class="nav-group" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>শুরু করুন</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#git-basics" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">01</span><span>Git কীভাবে কাজ করে</span></a><a href="#new-project-push" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">02</span><span>Brand-new project push</span></a><a href="#manual-git-config" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">03</span><span>Manual .git/config</span></a><a href="#project-identity" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">04</span><span>Project identity</span></a></div>
+        </details><details class="nav-group" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Remote Management</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#multiple-remotes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">05</span><span>Multiple remote</span></a><a href="#remote-maintenance" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">06</span><span>Remote URL maintenance</span></a><a href="#ahead-behind" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">07</span><span>Ahead ও behind</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Branch Workflow</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#fetch-pull-merge-rebase" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">08</span><span>Fetch, pull, merge, rebase</span></a><a href="#branch-workflow" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">09</span><span>Feature branch flow</span></a><a href="#stash-before-pull" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">10</span><span>Stash before pull</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Commit Management</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#cherry-pick" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">11</span><span>Cherry-pick</span></a><a href="#selected-pending-push" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">12</span><span>Selected commit push</span></a><a href="#split-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">13</span><span>Commit split</span></a><a href="#amend-last-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">14</span><span>Amend last commit</span></a><a href="#unstage-file" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">15</span><span>Unstage file</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>Recovery</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#discard-local-changes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">16</span><span>Discard local changes</span></a><a href="#revert-pushed-commit" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">17</span><span>Revert pushed commit</span></a><a href="#reset-modes" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">18</span><span>Reset modes</span></a><a href="#cancel-bad-merge" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">19</span><span>Cancel bad merge</span></a><a href="#rescue-stable-branch" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">20</span><span>Stable rescue branch</span></a><a href="#reflog-recovery" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">21</span><span>Reflog recovery</span></a></div>
+        </details><details class="nav-group" >
+          <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-400 transition hover:bg-slate-800/70 hover:text-slate-200"><span>VPS Guide</span><svg viewBox="0 0 24 24" class="h-4 w-4 transition group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <div class="mt-1 space-y-1"><a href="#vps-conflict-fix" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">22</span><span>Terminal conflict fix</span></a><a href="#production-safety" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">23</span><span>Production safety</span></a><a href="#common-errors" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">24</span><span>Common errors</span></a><a href="#quick-reference" class="nav-link group flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-white"><span class="inline-flex w-7 justify-center text-xs font-black text-orange-300">25</span><span>Quick reference</span></a></div>
+        </details></nav>
+  </aside>
+
+  <button id="mobileFab" type="button" class="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-2xl bg-orange-500 text-xl text-white shadow-2xl shadow-orange-500/30 transition hover:scale-105 lg:hidden" aria-label="Tutorial index খুলুন">☰</button>
+  <button id="backToTop" type="button" class="fixed bottom-5 left-5 z-50 hidden h-12 w-12 place-items-center rounded-2xl border border-slate-700 bg-slate-900/90 text-xl text-white shadow-xl transition hover:border-orange-400" aria-label="উপরে যান">↑</button>
+  <div id="toast" class="fixed bottom-6 left-1/2 z-[90] -translate-x-1/2 translate-y-8 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-3 text-sm font-bold text-emerald-100 opacity-0 shadow-2xl backdrop-blur transition-all duration-300">✓ Command copied</div>
+
+  <script>
+    (() => {
+      const html = document.documentElement;
+      const body = document.body;
+      const drawer = document.getElementById('mobileDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const fab = document.getElementById('mobileFab');
+      const closeBtn = document.getElementById('drawerClose');
+      const toast = document.getElementById('toast');
+      const backToTop = document.getElementById('backToTop');
+      const progressBar = document.getElementById('progressBar');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      const desktopSearch = document.getElementById('desktopSearch');
+      const mobileSearch = document.getElementById('mobileSearch');
+      const topSearch = document.getElementById('topSearch');
+      const links = [...document.querySelectorAll('.nav-link')];
+      const sections = [...document.querySelectorAll('.doc-section')];
+
+      function openDrawer() { drawer.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); body.classList.add('overflow-hidden'); }
+      function closeDrawer() { drawer.classList.add('-translate-x-full'); overlay.classList.add('hidden'); body.classList.remove('overflow-hidden'); }
+      fab.addEventListener('click', openDrawer); closeBtn.addEventListener('click', closeDrawer); overlay.addEventListener('click', closeDrawer);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+      links.forEach(link => link.addEventListener('click', () => closeDrawer()));
+
+      let toastTimer;
+      function showToast(message = '✓ Command copied') { toast.textContent = message; toast.classList.remove('opacity-0','translate-y-8'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.add('opacity-0','translate-y-8'), 1500); }
+      document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+        const code = btn.closest('.code-shell').querySelector('.code-content').innerText;
+        try { await navigator.clipboard.writeText(code); showToast(); }
+        catch {
+          const area = document.createElement('textarea'); area.value = code; body.appendChild(area); area.select(); document.execCommand('copy'); area.remove(); showToast();
+        }
+      }));
+
+      function filterNav(value) {
+        const q = value.trim().toLowerCase();
+        document.querySelectorAll('.nav-group').forEach(group => {
+          let visible = 0;
+          group.querySelectorAll('.nav-link').forEach(link => {
+            const match = !q || link.textContent.toLowerCase().includes(q);
+            link.style.display = match ? '' : 'none'; if (match) visible++;
+          });
+          group.style.display = visible ? '' : 'none'; if (q && visible) group.open = true;
+        });
+      }
+      [desktopSearch,mobileSearch].forEach(input => input.addEventListener('input', e => filterNav(e.target.value)));
+      topSearch.addEventListener('click', () => { desktopSearch.focus(); desktopSearch.scrollIntoView({block:'center'}); });
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) {
+          links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+        } });
+      }, { rootMargin: '-22% 0px -68% 0px', threshold: 0 });
+      sections.forEach(section => observer.observe(section));
+
+      function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        const progress = max > 0 ? scrollY / max : 0;
+        progressBar.style.transform = `scaleX(${progress})`;
+        backToTop.classList.toggle('hidden', scrollY < 700);
+        backToTop.classList.toggle('grid', scrollY >= 700);
+      }
+      addEventListener('scroll', onScroll, { passive:true }); onScroll();
+      backToTop.addEventListener('click', () => scrollTo({top:0, behavior:'smooth'}));
+
+      function applyTheme(theme) {
+        const isLight = theme === 'light';
+        html.classList.toggle('light', isLight); html.classList.toggle('dark', !isLight);
+        themeIcon.textContent = isLight ? '☀' : '☾'; localStorage.setItem('gitTutorialTheme', theme);
+      }
+      applyTheme(localStorage.getItem('gitTutorialTheme') || 'dark');
+      themeToggle.addEventListener('click', () => applyTheme(html.classList.contains('light') ? 'dark' : 'light'));
+    })();
+  </script>
+</body>
+</html>

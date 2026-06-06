@@ -1,0 +1,52 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Git বাংলা Tutorial thumbnail</title>
+  <desc id="desc">Git merge, push, cherry-pick and conflict fix tutorial cover</desc>
+  <defs>
+    <linearGradient id="bg" x1="80" y1="40" x2="1190" y2="690" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#020617"/>
+      <stop offset="0.52" stop-color="#071B39"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FB923C"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" rx="36" fill="url(#bg)"/>
+  <g opacity="0.2" stroke="#38BDF8">
+    <path d="M760 0L1280 0V520L1080 720H760L640 600V120L760 0Z"/>
+    <path d="M840 42H1240V468L1028 680H820L690 550V154L840 42Z"/>
+    <path d="M920 96H1190V420L986 624H870L744 500V214L920 96Z"/>
+  </g>
+  <g opacity="0.22" fill="#38BDF8">
+    <circle cx="1060" cy="140" r="4"/><circle cx="1100" cy="140" r="4"/><circle cx="1140" cy="140" r="4"/><circle cx="1180" cy="140" r="4"/>
+    <circle cx="1060" cy="180" r="4"/><circle cx="1100" cy="180" r="4"/><circle cx="1140" cy="180" r="4"/><circle cx="1180" cy="180" r="4"/>
+    <circle cx="1060" cy="220" r="4"/><circle cx="1100" cy="220" r="4"/><circle cx="1140" cy="220" r="4"/><circle cx="1180" cy="220" r="4"/>
+  </g>
+  <g filter="url(#glow)">
+    <rect x="886" y="218" width="118" height="118" rx="22" transform="rotate(45 886 218)" fill="url(#accent)"/>
+  </g>
+  <g transform="translate(888 260)" stroke="#0F172A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 0V110"/><path d="M40 44L86 88"/><circle cx="40" cy="0" r="10" fill="#0F172A"/><circle cx="40" cy="110" r="10" fill="#0F172A"/><circle cx="86" cy="88" r="10" fill="#0F172A"/>
+  </g>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="824" y="430" width="118" height="78" rx="14" stroke="#2DD4BF" stroke-width="6"/>
+    <path d="M848 458L868 476L848 494M882 494H914" stroke="#2DD4BF" stroke-width="6"/>
+    <rect x="1002" y="430" width="118" height="78" rx="14" stroke="#E2E8F0" stroke-width="6"/>
+    <path d="M1026 458L1046 476L1026 494M1060 494H1092" stroke="#E2E8F0" stroke-width="6"/>
+    <path d="M944 470H992" stroke="#F8FAFC" stroke-width="6"/>
+    <path d="M976 452L994 470L976 488" stroke="#F8FAFC" stroke-width="6"/>
+    <path d="M1138 422V520" stroke="#F8FAFC" stroke-width="6"/>
+    <path d="M1120 442L1138 422L1156 442M1120 500L1138 520L1156 500" stroke="#F8FAFC" stroke-width="6"/>
+  </g>
+  <text x="84" y="178" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="74" font-weight="800">GIT MERGE, PUSH,</text>
+  <text x="84" y="266" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="74" font-weight="800">CHERRY-PICK</text>
+  <text x="84" y="354" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="74" font-weight="800">ও CONFLICT FIX</text>
+  <rect x="84" y="410" width="638" height="84" rx="14" fill="url(#accent)"/>
+  <text x="114" y="468" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="42" font-weight="800">VPS সহ পূর্ণাঙ্গ বাংলা TUTORIAL</text>
+  <text x="84" y="614" fill="#FB923C" font-family="Arial, sans-serif" font-size="32" font-weight="800" letter-spacing="4">SHEFAT PORTFOLIO</text>
+</svg>
