@@ -422,7 +422,7 @@
     top: auto;
     height: 280px;
     bottom: 0;
-    background: url("/assets/hero/water-surface.svg") center bottom/cover no-repeat;
+    background: var(--asset-hero-water-surface) center bottom/cover no-repeat;
     z-index: 1;
     opacity: 0.92;
     animation: floatX 8s ease-in-out infinite;
@@ -1014,7 +1014,7 @@
     top: auto;
     height: 280px;
     bottom: 0;
-    background: url("/assets/hero/water-surface.svg") center bottom / cover no-repeat;
+    background: var(--asset-hero-water-surface) center bottom / cover no-repeat;
     z-index: 1;
     opacity: 0.92;
     animation: floatX 8s ease-in-out infinite;

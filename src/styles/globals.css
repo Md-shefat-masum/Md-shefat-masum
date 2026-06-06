@@ -388,19 +388,19 @@ button {
   width: 96px;
   height: 28px;
   opacity: 0.22;
-  background: url("/assets/stats/fish-silhouette.svg") center / contain no-repeat;
+  background: var(--asset-stats-fish-silhouette) center / contain no-repeat;
   filter: drop-shadow(0 0 16px rgba(0, 234, 255, 0.22));
   animation: atGlanceSwim 24s linear infinite;
 }
 
 .hero-bg-image {
-  background-image: url("/assets/hero/hero_bg.png");
+  background-image: var(--asset-hero-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   /* background:
       linear-gradient(90deg, rgba(2, 6, 11, 0.18), rgba(2, 6, 11, 0.2)),
-      url("/assets/hero/hero-port-bg.svg") center / cover no-repeat; */
+      var(--asset-hero-port-bg) center / cover no-repeat; */
   transform: scale(1.03);
   filter: saturate(1.08) contrast(1.04);
 }
@@ -413,7 +413,7 @@ button {
   height: 220px;
   opacity: 0.5;
   background:
-    url("/assets/footer/footer-wave-floor.svg") center bottom / cover no-repeat,
+    var(--asset-footer-wave-floor) center bottom / cover no-repeat,
     linear-gradient(180deg, transparent, rgba(0, 234, 255, 0.07));
   mask-image: linear-gradient(to top, black, transparent);
 }

@@ -46,19 +46,19 @@ export const projects = [
     title: 'EduPortal',
     description: 'Learning management platform with interactive tools and analytics.',
     tags: ['Next.js', 'TypeScript', 'MongoDB'],
-    image: '/projects/eduportal.webp',
+    image: './projects/eduportal.webp',
   },
   {
     title: 'CryptoTracker',
     description: 'Real-time cryptocurrency tracking and portfolio management.',
     tags: ['React', 'Node.js', 'Chart.js'],
-    image: '/projects/crypto.webp',
+    image: './projects/crypto.webp',
   },
   {
     title: 'ShopSphere',
     description: 'Full-featured e-commerce platform with secure payments.',
     tags: ['Next.js', 'Tailwind CSS', 'Stripe'],
-    image: '/projects/shop.webp',
+    image: './projects/shop.webp',
   },
 ]
 

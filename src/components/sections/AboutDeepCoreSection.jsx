@@ -25,8 +25,8 @@ export default function AboutDeepCoreSection() {
       <div className="depth-marker">-2000m · Deep Core</div>
 
       <div className="about-core-bg" aria-hidden="true">
-        <img src="/assets/about/deep-core-grid.svg" alt="" className="about-core-bg__grid" />
-        <img src="/assets/about/core-current-lines.svg" alt="" className="about-core-bg__lines" />
+        <img src="./assets/about/deep-core-grid.svg" alt="" className="about-core-bg__grid" />
+        <img src="./assets/about/core-current-lines.svg" alt="" className="about-core-bg__lines" />
         <span className="about-core-bg__glow about-core-bg__glow--one" />
         <span className="about-core-bg__glow about-core-bg__glow--two" />
         <span className="about-core-bg__bubble about-core-bg__bubble--one" />
@@ -73,7 +73,7 @@ export default function AboutDeepCoreSection() {
                     <div className="about-core-profile__beam about-core-profile__beam--right" />
                     <div className="about-core-profile__projector" />
                     <div className="about-core-profile__portrait-wrap">
-                      <img src="/assets/about/shefat-core-portrait.png" alt="Shefat Masum" />
+                      <img src="./assets/about/shefat-core-portrait.png" alt="Shefat Masum" />
                       <span className="about-core-profile__portrait-glow" />
                     </div>
                     <div className="about-core-profile__scan" />
@@ -135,7 +135,7 @@ export default function AboutDeepCoreSection() {
               </div>
 
               <div className="about-core-radar__screen">
-                <img src="/assets/about/core-radar.svg" alt="" />
+                <img src="./assets/about/core-radar.svg" alt="" />
                 <span className="about-core-radar__sweep" />
                 <span className="about-core-radar__center" />
               </div>

@@ -99,8 +99,8 @@ export default function JourneySection() {
       <div className="depth-marker">-1000m · Journey Route</div>
 
       <div className="journey-bg" aria-hidden="true">
-        <img src="/assets/journey/journey-route-grid.svg" alt="" className="journey-bg__grid" />
-        <img src="/assets/journey/journey-current-lines.svg" alt="" className="journey-bg__lines" />
+        <img src="./assets/journey/journey-route-grid.svg" alt="" className="journey-bg__grid" />
+        <img src="./assets/journey/journey-current-lines.svg" alt="" className="journey-bg__lines" />
         <span className="journey-bg__glow journey-bg__glow--one" />
         <span className="journey-bg__glow journey-bg__glow--two" />
         <span className="journey-bg__bubble journey-bg__bubble--one" />

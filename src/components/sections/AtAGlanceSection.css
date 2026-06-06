@@ -13,8 +13,8 @@
   z-index: 0;
   pointer-events: none;
   background-image:
-    url("/assets/stats/shallow-depth-grid.svg"),
-    url("/assets/stats/underwater-particles.svg");
+    var(--asset-stats-shallow-depth-grid),
+    var(--asset-stats-underwater-particles);
   background-size: cover, cover;
   background-position: center, center;
   opacity: 0.55;

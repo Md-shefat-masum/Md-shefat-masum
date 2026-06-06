@@ -14,8 +14,8 @@ export default function TechStackTerminalSection() {
         <div className="tech-terminal-grid" />
         <div className="tech-terminal-glow tech-terminal-glow--left" />
         <div className="tech-terminal-glow tech-terminal-glow--right" />
-        <img className="tech-terminal-wave" src="/assets/skills/terminal-surface-wave.svg" alt="" />
-        <img className="tech-terminal-dock" src="/assets/skills/terminal-dock-decor.svg" alt="" />
+        <img className="tech-terminal-wave" src="./assets/skills/terminal-surface-wave.svg" alt="" />
+        <img className="tech-terminal-dock" src="./assets/skills/terminal-dock-decor.svg" alt="" />
       </div>
 
       <div className="ocean-section-inner tech-terminal-inner">
